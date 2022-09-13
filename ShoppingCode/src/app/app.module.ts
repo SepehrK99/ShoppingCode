@@ -9,6 +9,7 @@ import { BodyComponent } from './body/body.component';
 import { LoginComponent } from './login/login.component';
 import { SearchComponent } from './search/search.component';
 import { CartComponent } from './cart/cart.component';
+import { GoogleComponent } from './google/google.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { CartComponent } from './cart/cart.component';
     LoginComponent,
     SearchComponent,
     CartComponent,
+    GoogleComponent,
     
   ],
   imports: [

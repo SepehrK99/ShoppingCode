@@ -8,10 +8,25 @@
   background-color: rgba(169, 165, 165, 0.27);
   box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
 }
-
 .g-signin2 div:hover {
   background-color: rgba( 255, 255, 255, 0.47);
 }
 .g-signin2 .go {
+  margin-left : 25px;
+}
+a {
+  width: 3rem;
+  height: 3rem;
+  display: none;
+  cursor: pointer;
+  color: #eaf0fb;
+  border-radius: 50%;
+  background-color: rgba(169, 165, 165, 0.27);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+}
+a div:hover {
+  background-color: rgba( 255, 255, 255, 0.47);
+}
+a .go {
   margin-left : 25px;
 }

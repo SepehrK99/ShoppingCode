@@ -21,7 +21,7 @@ import { GoogleComponent } from './google/google.component';
     SearchComponent,
     CartComponent,
     GoogleComponent,
-    
+
   ],
   imports: [
     BrowserModule,

@@ -8,7 +8,6 @@ import {SocialLoginModule, SocialAuthServiceConfig,} from 'angularx-social-login
 
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 @NgModule({
-  declarations: [AppComponent],
   imports: [BrowserModule, ReactiveFormsModule, SocialLoginModule],
   providers: [
     {
@@ -30,6 +29,7 @@ import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-logi
   ],
   bootstrap: [AppComponent],
 })
+
 export class AppModule {}
 
 const routes: Routes = [];

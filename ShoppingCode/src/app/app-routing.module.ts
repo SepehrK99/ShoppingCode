@@ -31,11 +31,5 @@ import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-logi
 })
 
 export class AppModule {}
-
-const routes: Routes = [];
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
 export class AppRoutingModule { }
 

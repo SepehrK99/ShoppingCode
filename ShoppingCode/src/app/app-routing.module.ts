@@ -1,35 +1,27 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { BrowserModule } from '@angular/platform-browser';
+import { Routes, RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import {SocialLoginModule, SocialAuthServiceConfig,} from 'angularx-social-login';
 
-import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+
+import { StoreComponent } from './store/store.component';
+
+const routes: Routes = [
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
+  { path: 'profile/:id', component: UserProfileComponent },
+  { path: 'shope', component: StoreComponent }
+];
+
 @NgModule({
-  imports: [BrowserModule, ReactiveFormsModule, SocialLoginModule],
-  providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider('Google-Client-ID-Goes-Here'),
-          },
-          {
-            id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('clientId')
-          }
-        ],
-      } as SocialAuthServiceConfig,
-    },
-  ],
+  imports: [RouterModule.forRoot(routes)],
+  providers: [],
   bootstrap: [AppComponent],
+  exports: [RouterModule]
 })
 
-export class AppModule {}
-export class AppRoutingModule { }
-
+export class AppRoutingModule {}

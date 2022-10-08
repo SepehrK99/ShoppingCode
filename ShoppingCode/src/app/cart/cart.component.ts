@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,} from '@angular/core';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit {
+export class CartComponent{
 
-  constructor() {
     // ('.add-cart-large').each(function(i, el){
     //   (el).click(function(){
     //     var carousel = (this).parent().parent().find(".carousel-container");
@@ -36,7 +35,7 @@ export class CartComponent implements OnInit {
 
     //     ("#cart .cart-item").last()
     //       .addClass("flash")
-    //       .find(".delete-item").click(function(){
+    //       .find(".delete-item").click(() =>{
     //         (this).parent().fadeOut(300, function(){
     //           (this).remove();
     //           if(("#cart .cart-item").size() == 0){
@@ -54,9 +53,4 @@ export class CartComponent implements OnInit {
 
     //   });
     // })
-  }
-
-  ngOnInit(): void {
-  }
-
 }

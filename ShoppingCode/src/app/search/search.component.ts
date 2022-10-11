@@ -14,4 +14,8 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  closeSearch() {
+    document.getElementById("myOverlay")!.style.display = "none";
+  }
+
 }

@@ -10,6 +10,15 @@ export class HeaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
+
+  openSearch() {
+    document.getElementById("myOverlay")!.style.display = "block";
+  }
+  openLogin() {
+    document.getElementById("displayNone")!.style.display = "block";
+  }
+
 
 }

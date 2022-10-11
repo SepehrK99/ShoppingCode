@@ -1,40 +1,51 @@
-<div id="body_login">
-  <div class="inFormBackg round">
-    <div class="inLoginForm">
-      <form onsubmit=" return false">
-        <div class="title"><h2>Login Here</h2></div>
-        <div class="inputGroup">
-          <label for="email ">Email</label>
-          <input
-            type="email"
-            placeholder="Enter Email"
-            id="email"
-          />
-        </div>
+<div id="displayNone">
+  <span class="closebtn" (click)="closeLogin()" title="Close Overlay Login">x</span>
+  <div id="body_login">
+    <div class="inFormBackg round">
+      <div class="inLoginForm">
+        <form onsubmit=" return false">
+          <div class="title"><h2>Login Here</h2></div>
           <div class="inputGroup">
-            <label for="password">Password</label>
+            <label for="email ">Email</label>
             <input
-              type="password"
-              placeholder="Enter Password"
-              ld="password"
+              type="email"
+              placeholder="Enter Email"
+              id="email"
             />
           </div>
-          <button class="submitForm">Log In</button>
-        <div class="social">
-          <div class="insta">
-            <a href=""><i class="fab fa-instagram"></i></a>
+            <div class="inputGroup">
+              <label for="password">Password</label>
+              <input
+                type="password"
+                placeholder="Enter Password"
+                ld="password"
+              />
+            </div>
+            <button class="submitForm">Log In</button>
+          <div class="social">
+            <div class="insta">
+              <a href="">
+                <i class="fab fa-instagram">
+                </i>
+              </a>
+            </div>
+            <div class="fb">
+              <a>
+                <i class="fab fa-facebook">
+
+                </i>
+              </a>
+            </div>
+            <div class=" go">
+              <a href="">
+                <i class="fab fa-google" (open)="openGoogle()" title="Open Overlay Google">
+                  <google-root></google-root>
+                </i>
+              </a>
+            </div>
           </div>
-          <div class="fb">
-            <a href=""><i class="fab fa-facebook"></i></a>
-          </div>
-          <div class=" go">
-            <a href="">
-              <i class="fab fa-google">
-              </i>
-            </a>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </div>

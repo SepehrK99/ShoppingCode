@@ -12,4 +12,11 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  closeLogin() {
+    document.getElementById("displayNone")!.style.display = "none";
+  }
+
+  openGoogle() {
+    document.getElementById("openGoogle")!.style.display = "block";
+  }
 }

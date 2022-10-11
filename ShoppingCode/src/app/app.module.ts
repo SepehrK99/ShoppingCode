@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { GoogleLoginProvider, FacebookLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreComponent } from './store/store.component';
+import { ContactComponent } from './contact/contact.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +28,7 @@ import { StoreComponent } from './store/store.component';
     RegisterComponent,
     UserProfileComponent,
     StoreComponent,
+    ContactComponent,
 
   ],
   imports: [

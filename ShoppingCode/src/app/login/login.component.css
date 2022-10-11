@@ -1,3 +1,24 @@
+#displayNone{
+  display: none;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(181, 181, 181);
+  background-color: rgba(120, 120, 120, 0.9);
+}
+
+#displayNone .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+  cursor: pointer;
+  color: white;
+}
+
 #body_login{
   height: 100vh;
   display: flex;
@@ -27,8 +48,8 @@
   backdrop-filter: blur( 5px);
   transform: translate(-50%, -50%);
   box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  background-color: rgba(169, 165, 165, 0.27);
+  border: 2px solid rgba(156, 156, 156, 0.553);
+  background-color: rgba(255, 255, 255, 0.49);
 }
 form *{
   border: none;
@@ -60,7 +81,7 @@ form *{
   background-color: #fff;
 }
 ::placeholder{
-  color: #969696;
+  color: #c4c4c4;
 }
 .submitForm {
   width: 100%;
@@ -74,7 +95,7 @@ form *{
   overflow: hidden;
   border-radius: 5px;
   position: relative;
-  background: rgba(169, 165, 165, 0.27);
+  background: rgba(220, 220, 220, 0.27);
 }
 .submitForm::before {
   Content: "";

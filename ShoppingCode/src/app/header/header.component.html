@@ -1,31 +1,22 @@
 <div id="header" class="spacebetween">
 	<ul class="header1">
-        <li><a href="">STORE</a></li>
-        <li><a href="">CONTACT</a></li>
-    </ul>
-    <ul class="header2">
-        <li>
-            <a href="" id="login">
-                <i class="fa fa-user">
-                </i>
-            </a>
-        </li>
-        <li id="myOverlay">
-            <a href="" id="search">
-                <i class="fa fa-search">
-                  <app-search>
-                  </app-search>
-                </i>
-            </a>
-        </li>
-    </ul>
+    <li><a routerLink="/store-component" routerLinkActive="active" ariaCurrentWhenActive="page">STORE</a></li>
+    <li><a routerLink="/contact-component" routerLinkActive="active" ariaCurrentWhenActive="page">CONTACT</a></li>
+  </ul>
+  <ul class="header2">
+    <li>
+      <a id="login">
+        <i class="fa fa-user" (click)="openLogin()" title="Open Overlay Login">
+          <app-login></app-login>
+        </i>
+      </a>
+    </li>
+    <li>
+      <a id="search">
+        <i class="fa fa-search" (click)="openSearch()" title="Open Overlay">
+          <app-search></app-search>
+        </i>
+      </a>
+    </li>
+  </ul>
 </div>
-
-<script>
-  function openSearch() {
-    document.getElementById("myOverlay").style.display = "block";
-  }
-  function closeSearch() {
-  document.getElementById("myOverlay").style.display = "none";
-  }
-</script>

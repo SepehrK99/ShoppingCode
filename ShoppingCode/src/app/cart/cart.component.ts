@@ -6,51 +6,42 @@ import { Component,} from '@angular/core';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent{
+  public categories = [
+    { id: 0, value: 'New Arivals' },
+    { id: 1, value: 'Accesories' },
+    { id: 2, value: 'Bags' },
+    { id: 3, value: 'Dressed' },
+    { id: 4, value: 'Jackets' },
+    { id: 5, value: 'jewelry' },
+    { id: 6, value: 'Shoes' },
+    { id: 7, value: 'Shirts' },
+    { id: 8, value: 'Sweaters' },
+    { id: 9, value: 'T-shirts' },
+  ];
 
-    // ('.add-cart-large').each(function(i, el){
-    //   (el).click(function(){
-    //     var carousel = (this).parent().parent().find(".carousel-container");
-    //     var img = carousel.find('img').eq(carousel.attr("rel"))[0];
-    //     var position = (img).offset();
+  clickCategory(id: number) {
 
-    //     var productName = (this).parent().find('h4').get(0).innerHTML;
+  }
 
-    //     ("body").append('<div class="floating-cart"></div>');
-    //     var cart = ('div.floating-cart');
-    //     ("<img src='"+img.src+"' class='floating-image-large' />").appendTo(cart);
+  // document.querySelector('.sizes a span, .categories a span').each(function(i, el){
+	// 	document.querySelector(el).insertAdjacentHTML("beforeend",'<span class="x"></span><span class="y"></span>');
 
-    //     (cart).css({'top' : position.top + 'px', "left" : position.left + 'px'}).fadeIn("slow").addClass('moveToCart');
-    //     setTimeout(function(){("body").addClass("MakeFloatingCart");}, 800);
+	// 	document.querySelector(el).parent().addEventListener('click', function(){
+	// 		if(document.querySelector(this).classList.contains('checked')){
+	// 			document.querySelector(el).querySelector('.y').classList.remove('animate');
+	// 			setTimeout(function(){
+	// 				document.querySelector(el).querySelector('.x').classList.remove('animate');
+	// 			}, 50);
+	// 			document.querySelector(this).classList.remove('checked');
+	// 			return false;
+	// 		}
 
-    //     setTimeout(function(){
-    //     ('div.floating-cart').remove();
-    //     ("body").removeClass("MakeFloatingCart");
-
-
-    //     var cartItem = "<div class='cart-item'><div class='img-wrap'><img src='"+img.src+"' alt='' /></div><span>"+productName+"</span><strong>$39</strong><div class='cart-item-border'></div><div class='delete-item'></div></div>";
-
-    //     ("#cart .empty").hide();
-    //     ("#cart").append(cartItem);
-    //     ("#checkout").fadeIn(500);
-
-    //     ("#cart .cart-item").last()
-    //       .addClass("flash")
-    //       .find(".delete-item").click(() =>{
-    //         (this).parent().fadeOut(300, function(){
-    //           (this).remove();
-    //           if(("#cart .cart-item").size() == 0){
-    //             ("#cart .empty").fadeIn(500);
-    //             ("#checkout").fadeOut(500);
-    //           }
-    //         })
-    //       });
-    //        setTimeout(function(){
-    //       ("#cart .cart-item").last().removeClass("flash");
-    //     }, 10 );
-
-    //   }, 1000);
-
-
-    //   });
-    // })
+	// 		document.querySelector(el).querySelector('.x').classList.add('animate');
+	// 		setTimeout(function(){
+	// 			document.querySelector(el).querySelector('.y').classList.add('animate');
+	// 		}, 100);
+	// 		document.querySelector(this).classList.add('checked');
+	// 		return false;
+	// 	});
+	// });
 }

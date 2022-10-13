@@ -110,11 +110,12 @@ div.cart-icon-bottom{
 }
 .checklist a .x.animate{
 	width:4px;
-	-webkit-transition: all 100ms ease-in;
+	/* -webkit-transition: all 100ms ease-in;
 	   -moz-transition: all 100ms ease-in;
 	    -ms-transition: all 100ms ease-in;
 	     -o-transition: all 100ms ease-in;
-	        transition: all 100ms ease-in;
+	        transition: all 100ms ease-in; */
+  transition: width 100ms ease-in, height 100ms ease-in;
 }
 .checklist a .y{
 	display:block;
@@ -147,15 +148,21 @@ div.cart-icon-bottom{
 	position:relative;
 	border-radius:100%;
 	background-color:#eae3d3;
-	width:13px;
+	/* width:13px;
 	height:13px;
-	margin-left:-20px;
-}
-.colors a:hover span{
-	width:15px;
+	margin-left:-20px; */
+  width:15px;
 	height:15px;
 	margin-top:3px;
 	margin-left:-21px;
+  border: 1px solid white;
+}
+.colors a:hover span{
+  border-width: 0px;
+	/* width:15px;
+	height:15px;
+	margin-top:3px;
+	margin-left:-21px; */
 }
 #sidebar img{
   margin-top:6px;

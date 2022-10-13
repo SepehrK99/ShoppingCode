@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  public isSearchOpen = false;
 
   constructor() { }
 
@@ -14,8 +15,13 @@ export class HeaderComponent implements OnInit {
   }
 
   openSearch() {
-    document.getElementById("myOverlay")!.style.display = "block";
+    //document.getElementById("myOverlay")!.style.display = "block";
+    this.isSearchOpen = true;
   }
+  closeSearch() {
+    this.isSearchOpen = false;
+  }
+
   openLogin() {
     document.getElementById("displayNone")!.style.display = "block";
   }

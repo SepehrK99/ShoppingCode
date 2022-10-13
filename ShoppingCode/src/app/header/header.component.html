@@ -1,21 +1,19 @@
 <div id="header" class="spacebetween">
 	<ul class="header1">
-    <li><a routerLink="/store-component" routerLinkActive="active" ariaCurrentWhenActive="page">STORE</a></li>
-    <li><a routerLink="/contact-component" routerLinkActive="active" ariaCurrentWhenActive="page">CONTACT</a></li>
+    <li><a routerLink="/store" routerLinkActive="active" ariaCurrentWhenActive="page">STORE</a></li>
+    <li><a routerLink="/contact" routerLinkActive="active" ariaCurrentWhenActive="page">CONTACT</a></li>
   </ul>
   <ul class="header2">
     <li>
       <a id="login">
-        <i class="fa fa-user" (click)="openLogin()" title="Open Overlay Login">
-          <app-login></app-login>
-        </i>
+        <i class="fa fa-user" (click)="openLogin()" title="Open Overlay Login"></i>
+        <app-login></app-login>
       </a>
     </li>
     <li>
       <a id="search">
-        <i class="fa fa-search" (click)="openSearch()" title="Open Overlay">
-          <app-search></app-search>
-        </i>
+        <i class="fa fa-search" (click)="openSearch()" title="Open Overlay"></i>
+        <app-search *ngIf="isSearchOpen" (close)="closeSearch()"></app-search>
       </a>
     </li>
   </ul>

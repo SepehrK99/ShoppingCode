@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-search',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
+  @Output() close = new EventEmitter<void>();
 
   constructor() { // Open the full screen search box
 
@@ -14,8 +15,8 @@ export class SearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  closeSearch() {
-    document.getElementById("myOverlay")!.style.display = "none";
-  }
+  // closeSearch() {
+  //   // document.getElementById("myOverlay")!.style.display = "none";
+  // }
 
 }

@@ -18,7 +18,8 @@
     <h3>CATEGORIES</h3>
     <div class="checklist categories">
     	<ul>
-        	<li><a href=""><span></span>New Arivals</a></li>
+        <li *ngFor="let category of categories"><a (click)="clickCategory(category.id)"><span></span>{{ category.value }}</a></li>
+        	<!-- <li><a href=""><span></span>New Arivals</a></li>
             <li><a href=""><span></span>Accesories</a></li>
             <li><a href=""><span></span>Bags</a></li>
             <li><a href=""><span></span>Dressed</a></li>
@@ -27,7 +28,7 @@
             <li><a href=""><span></span>Shoes</a></li>
             <li><a href=""><span></span>Shirts</a></li>
             <li><a href=""><span></span>Sweaters</a></li>
-            <li><a href=""><span></span>T-shirts</a></li>
+            <li><a href=""><span></span>T-shirts</a></li> -->
         </ul>
     </div>
 
@@ -68,3 +69,4 @@
      <h3>PRICE RANGE</h3>
      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/price-range.png" alt="" />
 </div>
+

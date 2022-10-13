@@ -1,0 +1,24 @@
+#layoutContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#layoutHeader {
+  height: 80px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+#layoutFooter {
+  height: 80px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+#layoutContent {
+  flex-grow: 1;
+  overflow: auto;
+}

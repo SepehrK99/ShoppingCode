@@ -8,14 +8,14 @@ import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { SearchComponent } from './search/search.component';
 import { CartComponent } from './cart/cart.component';
-import { GoogleComponent } from './google/google.component';
 import { RegisterComponent } from './register/register.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { HttpClientModule } from '@angular/common/http';
-import { GoogleLoginProvider, FacebookLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreComponent } from './store/store.component';
 import { ContactComponent } from './contact/contact.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSliderModule } from '@angular/material/slider';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +24,6 @@ import { ContactComponent } from './contact/contact.component';
     LoginComponent,
     SearchComponent,
     CartComponent,
-    GoogleComponent,
     RegisterComponent,
     UserProfileComponent,
     StoreComponent,
@@ -36,25 +35,8 @@ import { ContactComponent } from './contact/contact.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    SocialLoginModule
-  ],
-  providers: [
-    {
-    provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider('Google-Client-ID-Goes-Here'),
-          },
-          {
-            id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('clientId')
-          }
-        ],
-      } as SocialAuthServiceConfig,
-    },
+    BrowserAnimationsModule,
+    MatSliderModule,
   ],
   bootstrap: [AppComponent]
 })

@@ -3,7 +3,8 @@ import { Component,} from '@angular/core';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  styleUrls: ['./cart.component.css'],
+
 })
 export class CartComponent{
   public categories = [
@@ -22,6 +23,46 @@ export class CartComponent{
   clickCategory(id: number) {
 
   }
+
+  public colors = [
+    { id: 0, value: '#dcdcc6', name: 'Beige'},
+    { id: 1, value: '#222', name: 'Black' },
+    { id: 2, value: '#6e8cd5', name: 'Blue' },
+    { id: 3, value: '#f56060', name: 'Brown' },
+    { id: 4, value: '#44c28d', name: 'Green' },
+    { id: 5, value: '#999', name: 'Grey' },
+    { id: 6, value: '#f79858', name: 'Orange' },
+    { id: 7, value: '#b27ef8', name: 'Purple' },
+    { id: 8, value: '#f56060', name: 'Red' },
+    { id: 9, value: '#fff', name: 'White', border: '1px solid #e8e9eb' },
+  ];
+
+  clickColor(id: number) {
+
+  }
+
+  public sizes = [
+    { id: 0, value: 'XS'},
+    { id: 0, value: 'S'},
+    { id: 0, value: 'M'},
+    { id: 0, value: 'L'},
+    { id: 0, value: 'XL'},
+    { id: 0, value: 'XXL'},
+  ];
+
+  clickSize(id: number) {
+
+  }
+
+  formatLabel(value: number) {
+    if (value >= 1) {
+      return Math.round(value / 1) + '€';
+    }
+
+    return value;
+  }
+
+
 
   // document.querySelector('.sizes a span, .categories a span').each(function(i, el){
 	// 	document.querySelector(el).insertAdjacentHTML("beforeend",'<span class="x"></span><span class="y"></span>');

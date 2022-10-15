@@ -62,39 +62,43 @@ div.cart-icon-bottom{
 	position:relative;
 }
 .sizes li span, .categories .sizes li{
-	-webkit-transition: all 300ms ease-out;
+	/* -webkit-transition: all 300ms ease-out;
 	   -moz-transition: all 300ms ease-out;
 	    -ms-transition: all 300ms ease-out;
 	     -o-transition: all 300ms ease-out;
-	        transition: all 300ms ease-out;
+	        transition: all 300ms ease-out; */
+  transition: width 300ms ease-out, height 300ms ease-out;
 }
 .checklist li a{
 	color:#676a74;
-	text-decoration:none;
+	/* text-decoration:none;
 	-webkit-transition: all 300ms ease-out;
 	   -moz-transition: all 300ms ease-out;
 	    -ms-transition: all 300ms ease-out;
 	     -o-transition: all 300ms ease-out;
-	        transition: all 300ms ease-out;
+	        transition: all 300ms ease-out; */
+  transition: width 300ms ease-out, height 300ms ease-out;
 }
 .checklist li a:hover{
 	color:#222;
-	-webkit-transition: all 300ms ease-out;
+	/* -webkit-transition: all 300ms ease-out;
 	   -moz-transition: all 300ms ease-out;
 	    -ms-transition: all 300ms ease-out;
 	     -o-transition: all 300ms ease-out;
-	        transition: all 300ms ease-out;
+	        transition: all 300ms ease-out; */
+  transition: width 300ms ease-out, height 300ms ease-out;
 }
 .checklist a:hover span{
 	border-color:#a6aab3;
 }
 .sizes a:hover span, .categories a:hover span{
 	border-color:#a6aab3;
-	-webkit-transition: all 300ms ease-out;
+	/* -webkit-transition: all 300ms ease-out;
 	   -moz-transition: all 300ms ease-out;
 	    -ms-transition: all 300ms ease-out;
 	     -o-transition: all 300ms ease-out;
-	        transition: all 300ms ease-out;
+	        transition: all 300ms ease-out; */
+  transition: width 300ms ease-out, height 300ms ease-out;
 }
 .checklist a span span{border:none;margin:0;float:none; position:absolute;top:0;left:0;}
 .checklist a .x{
@@ -106,7 +110,8 @@ div.cart-icon-bottom{
 	-ms-transform: rotate(45deg);
    	-webkit-transform: rotate(45deg);
     transform: rotate(45deg);
-	-webkit-transition: all 50ms ease-out;
+	/* -webkit-transition: all 50ms ease-out; */
+  transition: width 50ms ease-out, height 50ms ease-out;
 }
 .checklist a .x.animate{
 	width:4px;
@@ -126,15 +131,17 @@ div.cart-icon-bottom{
 	-ms-transform: rotate(13deg);
   -webkit-transform: rotate(135deg);
   transform: rotate(135deg);
-	-webkit-transition: all 50ms ease-out;
+	/* -webkit-transition: all 50ms ease-out; */
+  transition: width 50ms ease-out, height 50ms ease-out;
 }
 .checklist a .y.animate{
-	width:8px;
+	/* width:8px;
 	-webkit-transition: all 100ms ease-out;
 	   -moz-transition: all 100ms ease-out;
 	    -ms-transition: all 100ms ease-out;
 	     -o-transition: all 100ms ease-out;
-	        transition: all 100ms ease-out;
+	        transition: all 100ms ease-out; */
+  transition: width 100ms ease-out, height 100ms ease-out;
 }
 .checklist .checked span{
 	border-color:#8d939f;
@@ -166,4 +173,8 @@ div.cart-icon-bottom{
 }
 #sidebar img{
   margin-top:6px;
+}
+
+mat-slider {
+  width: 200px;
 }

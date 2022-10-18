@@ -7,13 +7,13 @@
 }
 
 #layoutHeader {
-  height: 80px;
+  height: 40px;
   flex-grow: 0;
   flex-shrink: 0;
 }
 
 #layoutFooter {
-  height: 80px;
+  height: 50px;
   flex-grow: 0;
   flex-shrink: 0;
 }

@@ -26,6 +26,7 @@ div.cart-icon-bottom{
 	border-right:1px solid #eee;
   height: 100%;
   overflow-y: scroll;
+  padding: 10px;
 }
 #sidebar h3{
 	color:#262626;

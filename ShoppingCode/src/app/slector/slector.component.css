@@ -1,0 +1,52 @@
+#grid-selector{
+	height: 10px;
+	width: 100%;
+	padding: 40px 0;
+	color: #5d5f68;
+	font-size: 14px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+
+#grid-menu{
+	width:105px;
+}
+
+#grid-menu ul{
+  width: 65px;
+  position: relative;
+  top: -1px;
+}
+
+#grid-menu li{
+
+  width:25px;
+  height:25px;
+  list-style:none;
+}
+
+#grid-menu li a{
+  display:block;
+  width:25px;
+  height:25px;
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/grid-menu.png") 0 0  no-repeat;
+}
+
+#grid-menu li.smallGrid{margin-right:7px;}
+#grid-menu li.smallGrid a{background-position:0 -33px;}
+#grid-menu li.largeGrid a{background-position:-37px 0;}
+
+#grid-menu li.smallGrid a.active{background-position:0 0;}
+#grid-menu li.largeGrid a.active{background-position:-37px -33px;}
+
+#grid-item {
+  display: flex;
+  flex-direction: row;
+  padding: 0px;
+  margin: 0px;
+}
+
+#grid-item li{
+  margin: 5px;
+}

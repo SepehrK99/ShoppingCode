@@ -16,6 +16,8 @@ import { StoreComponent } from './store/store.component';
 import { ContactComponent } from './contact/contact.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
+import { ItemsComponent } from './items/items.component';
+import { SlectorComponent } from './slector/slector.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +30,8 @@ import { MatSliderModule } from '@angular/material/slider';
     UserProfileComponent,
     StoreComponent,
     ContactComponent,
+    ItemsComponent,
+    SlectorComponent,
 
   ],
   imports: [

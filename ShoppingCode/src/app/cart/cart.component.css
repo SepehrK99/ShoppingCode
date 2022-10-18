@@ -23,8 +23,9 @@ div.cart-icon-bottom{
 	float:left;
 	background:#fff;
 	width:275px;
-	padding:13px 0 0 45px;
 	border-right:1px solid #eee;
+  height: 100%;
+  overflow-y: scroll;
 }
 #sidebar h3{
 	color:#262626;

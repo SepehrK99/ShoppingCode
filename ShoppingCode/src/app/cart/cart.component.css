@@ -22,10 +22,9 @@ div.cart-icon-bottom{
 #sidebar{
 	float:left;
 	background:#fff;
-	width:275px;
+	width:240px;
 	border-right:1px solid #eee;
   height: 100%;
-  overflow-y: scroll;
   padding: 10px;
 }
 #sidebar h3{

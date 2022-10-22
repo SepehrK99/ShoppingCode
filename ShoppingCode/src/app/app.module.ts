@@ -15,6 +15,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { ItemsComponent } from './items/items.component';
 import { SlectorComponent } from './slector/slector.component';
+import { ImpressumComponent } from './impressum/impressum.component';
+import { ContactComponent } from './contact/contact.component';
+import { DatenschutzComponent } from './datenschutz/datenschutz.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +29,9 @@ import { SlectorComponent } from './slector/slector.component';
     StoreComponent,
     ItemsComponent,
     SlectorComponent,
+    ImpressumComponent,
+    ContactComponent,
+    DatenschutzComponent,
 
   ],
   imports: [

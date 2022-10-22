@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,17 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
   public isSearchOpen = false;
 
-  constructor() { }
+  public isLoginOpen = false;
+
+  constructor(private route:Router){}
+
+  	go(){
+		this.route.navigate(['/page']); // navigate to other page
+	}
+
+  goPlaces() {
+  this.route.navigate(['/', 'page-name']);
+}
 
   ngOnInit(): void {
 
@@ -23,8 +34,10 @@ export class HeaderComponent implements OnInit {
   }
 
   openLogin() {
-    document.getElementById("displayNone")!.style.display = "block";
+    //document.getElementById("myOverlay")!.style.display = "block";
+    this.isLoginOpen = true;
   }
-
-
+  closeLogin() {
+    this.isLoginOpen = false;
+  }
 }

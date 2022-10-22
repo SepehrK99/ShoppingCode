@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-login',
@@ -7,13 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
+  @Output() close = new EventEmitter<void>();
+
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  closeLogin() {
-    document.getElementById("displayNone")!.style.display = "none";
   }
 
   openGoogle() {

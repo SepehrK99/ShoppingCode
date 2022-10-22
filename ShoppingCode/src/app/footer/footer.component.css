@@ -1,0 +1,32 @@
+.container{
+  margin: 0px;
+  padding: 0px;
+}
+
+.spacebetween-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.copyright {
+  list-style: none;
+  text-decoration: none;
+}
+
+.footerInfo ul{
+  list-style: none;
+  text-transform: uppercase;
+  display: flex;
+  margin: 0px;
+  padding: 15px 10px;
+}
+
+.padding{
+  padding: 0px 0px 0px 20px;
+}
+
+li a{
+  text-decoration: none;
+  color: #000;
+}

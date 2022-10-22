@@ -7,7 +7,7 @@
     <li>
       <a id="login">
         <i class="fa fa-user" (click)="openLogin()" title="Open Overlay Login"></i>
-        <app-login></app-login>
+        <app-login *ngIf="isLoginOpen" (close)="closeLogin()"></app-login>
       </a>
     </li>
     <li>

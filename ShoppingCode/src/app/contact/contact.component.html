@@ -1,1 +1,26 @@
-<p>contact works!</p>
+<form action="SENDEADRESSE" id="ft-form" method="POST" accept-charset="UTF-8">
+  <fieldset>
+    <label>
+      Name
+      <input type="text" name="Name" required>
+    </label>
+    <label>
+      E-Mail-Adresse
+      <input type="email" name="E-Mail" required>
+    </label>
+    <label>
+      Ihre Nachricht
+      <textarea rows="3" name="Nachricht" required></textarea>
+    </label>
+    <div>
+      <label>
+        <input type="checkbox" name="Datenverarbeitung bestätigt" value="Ja" required>
+        Ich bestätige, dass ich mit der Verarbeitung meiner Eingaben zum Zwecke der Anfragebearbeitung, einverstanden bin.
+      </label>
+    </div>
+  </fieldset>
+  <div class="btns">
+    <input type="text" name="_gotcha" value="" style="display:none;">
+    <input type="submit" value="Absenden">
+  </div>
+</form>

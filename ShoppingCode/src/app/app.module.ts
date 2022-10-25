@@ -18,6 +18,7 @@ import { SlectorComponent } from './slector/slector.component';
 import { ImpressumComponent } from './impressum/impressum.component';
 import { ContactComponent } from './contact/contact.component';
 import { DatenschutzComponent } from './datenschutz/datenschutz.component';
+import { SigninComponent } from './signin/signin.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +33,7 @@ import { DatenschutzComponent } from './datenschutz/datenschutz.component';
     ImpressumComponent,
     ContactComponent,
     DatenschutzComponent,
-
+    SigninComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +43,7 @@ import { DatenschutzComponent } from './datenschutz/datenschutz.component';
     BrowserAnimationsModule,
     MatSliderModule,
   ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

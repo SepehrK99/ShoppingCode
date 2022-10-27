@@ -15,6 +15,8 @@
 // verify().catch(console.error);
 
 import express from 'express';
+import cors from 'cors';
+import qs from 'qs';
 import {MongoClient} from 'mongodb';
 import * as dotenv from 'dotenv';
 
@@ -23,14 +25,43 @@ dotenv.config();
 const url = process.env.MONGODB_CONNECTION_STRING;
 const client = new MongoClient(url);
 
+function log(req, res, next) {
+  console.log('REQUESTED', req.url);
+  console.log('Query', req.query);
+  console.log('Body', req.body);
+  next();
+}
+
 async function main() {
   await client.connect();
   const db = client.db('shopping');
   
-  const app = express()
+  const app = express();
+  app.set('query parser', (str) => qs.parse(str));
 
-  app.get('/product', async function (req, res) {
+  app.use(express.json());
+  app.use(cors());
+
+  app.use(log);
+
+  app.get('/api/product', async function (req, res) {
     try{
+      // Filter examples:
+      // size available in m: { sizes: 'm' }
+      // size available in m and l: { sizes: { $in: ['m', 'l'] } }
+      // price range 10 to 40: { $and: [{ price: { $gte: 10 }}, { price: { $lte: 40 }}] }
+      // color name equals blue: { 'colors.name': 'blue' }
+      /*
+        combine multiple filters: 
+        {
+          sizes: { $in: ['m', 'l'] },
+          'colors.name': 'green',
+          $and: [
+            { price: { $gte: 10 }},
+            { price: { $lte: 40 }},
+          ],
+        }
+      */
       const products =await db.collection('product').find({}).toArray();
       res.send(products);
     }
@@ -38,6 +69,8 @@ async function main() {
       res.status(400).send(error.massage);
     }
   })
+
+  // Massage von Contact 'insertone
 
   app.listen(3000, () =>{
     console.log('server running');

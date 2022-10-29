@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Message, ShoppingService } from '../shopping.service';
 
 @Component({
   selector: 'app-contact',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactComponent implements OnInit {
 
-  constructor() { }
+  constructor(private shoppingService: ShoppingService) { }
 
   ngOnInit(): void {
   }
 
+  getMessage(){
+    let message = new Message();
+    this.shoppingService.getMessage(message);
+  }
 }

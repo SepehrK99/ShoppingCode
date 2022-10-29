@@ -1,4 +1,4 @@
-<form action="SENDEADRESSE" id="ft-form" method="POST" accept-charset="UTF-8">
+<form id="ft-form" method="POST">
   <fieldset>
     <label>
       Name
@@ -19,8 +19,7 @@
       </label>
     </div>
   </fieldset>
-  <div class="btns">
-    <input type="text" name="_gotcha" value="" style="display:none;">
-    <input type="submit" value="Absenden">
+  <div class="btns" (click)="getMessage()">
+    <input type="submit" value="Absenden" >
   </div>
 </form>

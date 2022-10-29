@@ -1,8 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-import { throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { retry, catchError, throwError } from 'rxjs';
 
 export interface Product {
   _id: String,
@@ -17,21 +15,35 @@ export interface Product {
   }[],
 }
 
+export class Message {
+  _id!: String;
+  name!: String;
+  email!: String;
+  message!: String;
+}
+
 @Injectable({
   providedIn: 'root'
 })
-export class ItemsService {
+export class ShoppingService {
   shoppingUrl = '/api/'
 
   constructor(private http: HttpClient) {}
 
-  getProducts() {
+  public getProducts() {
     //?sizes=m,l&color=blue  httpclient docu anschauen
     return this.http.get<Product[]>(`${this.shoppingUrl}product`)
       .pipe(
         retry(3), // retry a failed request up to 3 times
         catchError(this.handleError) // then handle the error
       );
+  }
+
+  public getMessage(message: Message){
+    this.http.post(`${this.shoppingUrl}message`, message)
+    .subscribe(data =>{
+
+    })
   }
 
   private handleError(error: HttpErrorResponse) {

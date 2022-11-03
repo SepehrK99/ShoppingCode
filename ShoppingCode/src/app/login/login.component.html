@@ -11,6 +11,7 @@
               type="email"
               placeholder="Enter Email"
               id="email"
+              pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
             />
           </div>
             <div class="inputGroup">
@@ -22,7 +23,7 @@
               />
             </div>
             <button class="submitForm">Log In</button>
-            <a routerLink="/signin" routerLinkActive="active" ariaCurrentWhenActive="page"><button class="submitForm">Sing In</button></a>
+            <button (click)="openSignup.emit()" title="Open Overlay Signup" class="submitForm">Sign Up</button>
           <div class="social">
             <div class="insta">
               <a href="">
@@ -42,7 +43,7 @@
             </div>
             <div class=" go">
               <a href="">
-                <i class="fab fa-google" (open)="openGoogle()" title="Open Overlay Google">
+                <i class="fab fa-google" title="Open Overlay Google">
                 </i>
               </a>
             </div>

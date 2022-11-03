@@ -71,16 +71,28 @@ async function main() {
   })
 
   // Massage von Contact 'insertone
-  app.post('/api/message'), async function(req, res){
+  app.post('/api/message', async function(req, res){
     try{
-      const message = await db.collection('message').insertOne({}).toArray();
-      res.redirect('/');
-      // res.get(message);
+      const { name, email, message } = req.body;
+      if (name.trim().length === 0) {
+        res.status(400).send('Name is required');
+        return;
+      }
+      if (email.trim().length === 0) {
+        res.status(400).send('Email is required');
+        return;
+      }
+      if (message.trim().length === 0) {
+        res.status(400).send('Message is required');
+        return;
+      }
+      const insertResult = await db.collection('message').insertOne({ name, email, message });
+      res.status(201).send(insertResult);
     }
     catch (error){
       res.status(400).send(error.massage);
     }
-  }
+  });
 
   app.listen(3000, () =>{
     console.log('server running');

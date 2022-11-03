@@ -18,6 +18,11 @@
   color: white;
 }
 
+#displayNone .closebtn:hover, .closebtn:focus {
+  color: #f44336;
+  cursor: pointer;
+}
+
 #body_login{
   height: 100vh;
   display: flex;
@@ -141,4 +146,10 @@ form *{
 }
 .social .go {
   margin-left : 25px;
+}
+
+.closebtn:hover,
+.closebtn:focus {
+  color: #f44336;
+  cursor: pointer;
 }

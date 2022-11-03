@@ -16,10 +16,9 @@ export interface Product {
 }
 
 export class Message {
-  _id!: String;
-  name!: String;
-  email!: String;
-  message!: String;
+  name: String = '';
+  email: String = '';
+  message: String = '';
 }
 
 @Injectable({
@@ -39,7 +38,7 @@ export class ShoppingService {
       );
   }
 
-  public getMessage(message: Message){
+  public postMessage(message: Message){
     this.http.post(`${this.shoppingUrl}message`, message)
     .subscribe(data =>{
 

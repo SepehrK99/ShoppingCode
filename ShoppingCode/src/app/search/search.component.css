@@ -31,8 +31,9 @@
   color: white;
 }
 
-.overlay .closebtn:hover {
-  color: #ccc;
+.overlay .closebtn:hover, .closebtn:focus {
+  color: #f44336;
+  cursor: pointer;
 }
 
 /* Style the search field */

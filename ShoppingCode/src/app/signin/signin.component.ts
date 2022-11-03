@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signin',
@@ -7,7 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SigninComponent implements OnInit {
 
-  constructor() { }
+  @Output() close = new EventEmitter<void>();
+
+  constructor(private route:Router) { }
+
+  go(){
+    this.route.navigate(['/page']); // navigate to other page
+  }
+
+  goPlaces() {
+  this.route.navigate(['/', 'page-name']);
+  }
 
   ngOnInit(): void {
   }

@@ -11,15 +11,17 @@ export class HeaderComponent implements OnInit {
 
   public isLoginOpen = false;
 
+  public isSignupOpen = false;
+
   constructor(private route:Router){}
 
-  	go(){
-		this.route.navigate(['/page']); // navigate to other page
+  go(){
+  this.route.navigate(['/page']); // navigate to other page
 	}
 
   goPlaces() {
   this.route.navigate(['/', 'page-name']);
-}
+  }
 
   ngOnInit(): void {
 
@@ -36,8 +38,18 @@ export class HeaderComponent implements OnInit {
   openLogin() {
     //document.getElementById("myOverlay")!.style.display = "block";
     this.isLoginOpen = true;
+    this.isSignupOpen = false;
   }
   closeLogin() {
     this.isLoginOpen = false;
+  }
+
+  openSignup() {
+    this.isSignupOpen = true;
+    this.isLoginOpen =false;
+  }
+
+  closeSignup() {
+    this.isSignupOpen = false;
   }
 }

@@ -10,6 +10,8 @@ export class LoginComponent implements OnInit {
 
   @Output() close = new EventEmitter<void>();
 
+  @Output() openSignup = new EventEmitter<void>();
+
   constructor(private route:Router){}
 
   go(){
@@ -23,7 +25,4 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  openGoogle() {
-    document.getElementById("openGoogle")!.style.display = "block";
-  }
 }

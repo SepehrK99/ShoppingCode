@@ -1,16 +1,16 @@
-<form id="ft-form" method="POST">
+<form id="ft-form">
   <fieldset>
     <label>
       Name
-      <input type="text" name="Name" required>
+      <input type="text" name="Name" [(ngModel)]="message.name" placeholder="Enter Name">
     </label>
     <label>
       E-Mail-Adresse
-      <input type="email" name="E-Mail" required>
+      <input type="email" name="Email" [(ngModel)]="message.email" pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" placeholder="Enter Email">
     </label>
     <label>
       Ihre Nachricht
-      <textarea rows="3" name="Nachricht" required></textarea>
+      <textarea rows="3" name="Message" [(ngModel)]="message.message" placeholder="Enter Message"></textarea>
     </label>
     <div>
       <label>
@@ -19,7 +19,5 @@
       </label>
     </div>
   </fieldset>
-  <div class="btns" (click)="getMessage()">
-    <input type="submit" value="Absenden" >
-  </div>
+    <button type="button" (click)="postMessage()" class="btns">Submit</button>
 </form>

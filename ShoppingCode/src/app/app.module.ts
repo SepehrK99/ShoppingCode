@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +20,7 @@ import { ImpressumComponent } from './impressum/impressum.component';
 import { ContactComponent } from './contact/contact.component';
 import { DatenschutzComponent } from './datenschutz/datenschutz.component';
 import { SigninComponent } from './signin/signin.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +36,7 @@ import { SigninComponent } from './signin/signin.component';
     ContactComponent,
     DatenschutzComponent,
     SigninComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +45,7 @@ import { SigninComponent } from './signin/signin.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatSliderModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

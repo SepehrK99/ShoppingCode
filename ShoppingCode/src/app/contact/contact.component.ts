@@ -7,14 +7,14 @@ import { Message, ShoppingService } from '../shopping.service';
   styleUrls: ['./contact.component.css']
 })
 export class ContactComponent implements OnInit {
+  message = new Message();
 
   constructor(private shoppingService: ShoppingService) { }
 
   ngOnInit(): void {
   }
 
-  getMessage(){
-    let message = new Message();
-    this.shoppingService.getMessage(message);
+  postMessage(){
+    this.shoppingService.postMessage(this.message);
   }
 }

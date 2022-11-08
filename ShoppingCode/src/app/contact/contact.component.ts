@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Message, ShoppingService } from '../shopping.service';
+import {ShoppingService } from '../shopping.service';
+import { Message, } from '../message.service';
 
 @Component({
   selector: 'app-contact',
@@ -8,6 +9,7 @@ import { Message, ShoppingService } from '../shopping.service';
 })
 export class ContactComponent implements OnInit {
   message = new Message();
+  messageService: any;
 
   constructor(private shoppingService: ShoppingService) { }
 
@@ -15,6 +17,6 @@ export class ContactComponent implements OnInit {
   }
 
   postMessage(){
-    this.shoppingService.postMessage(this.message);
+    this.messageService.postMessage(this.message);
   }
 }

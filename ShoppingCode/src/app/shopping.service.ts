@@ -14,13 +14,6 @@ export interface Product {
     value: String,
   }[],
 }
-
-export class Message {
-  name: String = '';
-  email: String = '';
-  message: String = '';
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -38,13 +31,6 @@ export class ShoppingService {
       );
   }
 
-  public postMessage(message: Message){
-    this.http.post(`${this.shoppingUrl}message`, message)
-    .subscribe(data =>{
-
-    })
-  }
-
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -58,25 +44,4 @@ export class ShoppingService {
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
-
-  // getConfig_1() {
-  //   return this.http.get<Shopping>(this.shoppingUrl);
-  // }
-
-  // getConfig_2() {
-  //   // now returns an Observable of Config
-  //   return this.http.get<Shopping>(this.shoppingUrl);
-  // }
-
-  // getConfig_3() {
-  //   return this.http.get<Shopping>(this.shoppingUrl)
-  //     .pipe(
-  //       catchError(this.shoppingError)
-  //     );
-  // }
-
-  // getConfigResponse(): Observable<HttpResponse<Shopping>> {
-  //   return this.http.get<Shopping>(
-  //     this.shoppingUrl, { observe: 'response' });
-  // }
 }

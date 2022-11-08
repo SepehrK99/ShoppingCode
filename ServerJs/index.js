@@ -1,19 +1,3 @@
-// const {OAuth2Client} = require('google-auth-library');
-// const client = new OAuth2Client(CLIENT_ID);
-// async function verify() {
-//   const ticket = await client.verifyIdToken({
-//       idToken: token,
-//       audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
-//       // Or, if multiple clients access the backend:
-//       //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
-//   });
-//   const payload = ticket.getPayload();
-//   const userid = payload['sub'];
-//   // If request specified a G Suite domain:
-//   // const domain = payload['hd'];
-// }
-// verify().catch(console.error);
-
 import express from 'express';
 import cors from 'cors';
 import qs from 'qs';
@@ -94,6 +78,60 @@ async function main() {
     }
   });
 
+
+
+
+
+/* GET users listing. */
+app.get('/api/login', async function (req, res) {
+  try {
+    const {email, password } = req.body; 
+   
+    const hashed_password = md5(password.toString());
+    const checkEmail = await db.collection('login').insertOne({email, message });
+      res.status(201).send(insertResult);
+    con.query(checkEmail, [email], (err, result, fields) => {
+      if(!result.length){
+        con.query(
+          mongodb, [email, hashed_password],
+        (err, result, fields) =>{
+          if(err){
+            res.send({ status: 0, data: err });
+          }else{
+            let token = jwt.sign({ data: result }, 'secret')
+            res.send({ status: 1, data: result, token : token });
+          }
+         
+        })
+      }
+    });
+  } catch (error) {
+    res.send({ status: 0, error: error });
+  }
+});
+app.post('/api/login', async function (req, res) {
+  try {
+    const {email, password } = req.body; 
+   
+    const hashed_password = md5(password.toString())
+    const loginEmail = await db.collection('login').insertOne({email, message });
+      res.status(201).send(insertResult);
+    con.query(
+      loginEmail, [email, hashed_password],
+    function(err, result, fields){
+      if(err){
+        res.send({ status: 0, data: err });
+      }else{
+        let token = jwt.sign({ data: result }, 'secret')
+        res.send({ status: 1, data: result, token: token });
+      }
+     
+    })
+  } catch (error) {
+    res.send({ status: 0, error: error });
+  }
+});
+
   app.listen(3000, () =>{
     console.log('server running');
   });
@@ -102,4 +140,3 @@ async function main() {
 main().catch((error) => {
   console.error(error);
 });
-

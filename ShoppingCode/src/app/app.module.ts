@@ -9,7 +9,7 @@ import { FooterComponent } from './footer/footer.component';
 import { LoginComponent } from './login/login.component';
 import { SearchComponent } from './search/search.component';
 import { CartComponent } from './cart/cart.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreComponent } from './store/store.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,6 +21,8 @@ import { ContactComponent } from './contact/contact.component';
 import { DatenschutzComponent } from './datenschutz/datenschutz.component';
 import { SigninComponent } from './signin/signin.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { RouterModule } from '@angular/router';
+import { SigninService } from './signin.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,8 +48,16 @@ import { CheckoutComponent } from './checkout/checkout.component';
     BrowserAnimationsModule,
     MatSliderModule,
     FormsModule,
+    FormsModule,
+    RouterModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SigninService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -22,8 +22,12 @@
                 ld="password"
               />
             </div>
-            <button class="submitForm">Log In</button>
+            <button class="submitForm" (click)="isUserLogin()">Log In</button>
             <button (click)="openSignup.emit()" title="Open Overlay Signup" class="submitForm">Sign Up</button>
+            <div class = 'col-md-4 offset-4 mt-5' *ngIf="isLogin">
+              <h1>You are logged in</h1>
+              <button class ="submitForm" (click)="logout()">Log-out</button>
+          </div>
           <div class="social">
             <div class="insta">
               <a href="">
@@ -54,45 +58,3 @@
   </div>
 </div>
 
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '{your-app-id}',
-      cookie     : true,
-      xfbml      : true,
-      version    : '{api-version}'
-    });
-
-    FB.AppEvents.logPageView();
-
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-
-
-  FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-  });
-
-
-  function checkLoginState() {
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
-  }
-  // {
-  //   status: 'connected',
-  //   authResponse: {
-  //       accessToken: '...',
-  //       expiresIn:'...',
-  //       signedRequest:'...',
-  //       userID:'...'
-  //   }
-  // }
-</script>

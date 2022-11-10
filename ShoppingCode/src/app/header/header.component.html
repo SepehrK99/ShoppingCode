@@ -9,7 +9,7 @@
         <i class="fa fa-user" (click)="openLogin()" title="Open Overlay Login"></i>
         <app-login *ngIf="isLoginOpen" (close)="closeLogin()" (openSignup)="openSignup()">
         </app-login>
-        <app-signin *ngIf="isSignupOpen" (close)="closeSignup()"></app-signin>
+        <app-signin *ngIf="isSignupOpen, isUserLogin" (close)="closeSignup()"></app-signin>
       </a>
     </li>
     <li>

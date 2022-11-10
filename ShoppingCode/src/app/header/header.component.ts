@@ -13,6 +13,8 @@ export class HeaderComponent implements OnInit {
 
   public isSignupOpen = false;
 
+  public isUserLogin = false;
+
   constructor(private route:Router){}
 
   go(){
@@ -51,5 +53,6 @@ export class HeaderComponent implements OnInit {
 
   closeSignup() {
     this.isSignupOpen = false;
+    this.isUserLogin = true;
   }
 }

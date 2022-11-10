@@ -18,6 +18,6 @@ export class MessageService {
   public postMessage(message: Message){
     this.http.post(`${this.shoppingUrl}message`, message)
     .subscribe(data =>{
-    })
+    });
   }
 }

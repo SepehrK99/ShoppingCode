@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { catchError, throwError } from 'rxjs';
 import { SigninService } from '../signin.service';
 
 @Component({
@@ -15,14 +17,9 @@ export class LoginComponent implements OnInit {
   @Output() openSignup = new EventEmitter<void>();
 
   public isLogin = false;
-  errorMessage: any
-  public protectedData: any
-  public loading: boolean = false
+  public protectedData: any;
 
   ngOnInit(): void {
-    this.signin.getTypeRequest('login').subscribe((res: any) => {
-      this.protectedData = res
-    });
 
     this.isUserLogin();
   }
@@ -42,21 +39,27 @@ export class LoginComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     console.log('Your form data : ', form.value);
-    this.signin.postTypeRequest('api/login', form.value).subscribe((res: any) => {
-
-      if (res.status) {
-
+    this.signin.postTypeRequest('login', form.value).pipe(catchError((error: HttpErrorResponse) => {
+      console.log('ERR', error);
+      return throwError(() => new Error('Something bad happened; please try again later.'));
+    })).subscribe((res: any) => {
+      console.log('RES', res);
+      if (res) {
         this.signin.setDataInLocalStorage('userData', JSON.stringify(res.data));
         this.signin.setDataInLocalStorage('token', res.token);
-        this.route.navigate(['']);
+        this.route.navigate(['profile']);
+      } else {
+        alert(res.msg);
       }
-    })
+    });
   }
+
   isUserLogin(){
     if(this.signin.getUserDetails() != null){
         this.isLogin = true;
     }
   }
+
   logout(){
     this.signin.clearStorage()
     this.route.navigate(['']);

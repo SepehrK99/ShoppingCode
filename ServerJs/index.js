@@ -1,8 +1,14 @@
-import express from 'express';
-import cors from 'cors';
-import qs from 'qs';
-import {MongoClient} from 'mongodb';
-import * as dotenv from 'dotenv';
+import express from "express";
+import cors from "cors";
+import qs from "qs";
+import { CURSOR_FLAGS, MongoClient } from "mongodb";
+import * as dotenv from "dotenv";
+import sha256 from 'crypto-js/sha256.js';
+import hmacSHA512 from 'crypto-js/hmac-sha512.js';
+import Base64 from 'crypto-js/enc-base64.js';
+import jwt from 'jsonwebtoken';
+import * as EmailValidator from 'email-validator';
+import PasswordValidator from 'password-validator';
 
 dotenv.config();
 
@@ -10,26 +16,28 @@ const url = process.env.MONGODB_CONNECTION_STRING;
 const client = new MongoClient(url);
 
 function log(req, res, next) {
-  console.log('REQUESTED', req.url);
-  console.log('Query', req.query);
-  console.log('Body', req.body);
+  console.log("REQUESTED", req.url);
+  console.log("Query", req.query);
+  console.log("Body", req.body);
   next();
 }
 
 async function main() {
   await client.connect();
-  const db = client.db('shopping');
-  
+
+  const db = client.db("shopping");
+
   const app = express();
-  app.set('query parser', (str) => qs.parse(str));
+
+  app.set("query parser", (str) => qs.parse(str));
 
   app.use(express.json());
   app.use(cors());
 
   app.use(log);
 
-  app.get('/api/product', async function (req, res) {
-    try{
+  app.get("/api/product", async function (req, res) {
+    try {
       // Filter examples:
       // size available in m: { sizes: 'm' }
       // size available in m and l: { sizes: { $in: ['m', 'l'] } }
@@ -46,94 +54,133 @@ async function main() {
           ],
         }
       */
-      const products = await db.collection('product').find({}).toArray();
+      const products = await db.collection("product").find({}).toArray();
       res.send(products);
-    }
-    catch (error){
-      res.status(400).send(error.massage);
-    }
-  })
-
-  // Massage von Contact 'insertone
-  app.post('/api/message', async function(req, res){
-    try{
-      const { name, email, message } = req.body;
-      if (name.trim().length === 0) {
-        res.status(400).send('Name is required');
-        return;
-      }
-      if (email.trim().length === 0) {
-        res.status(400).send('Email is required');
-        return;
-      }
-      if (message.trim().length === 0) {
-        res.status(400).send('Message is required');
-        return;
-      }
-      const insertResult = await db.collection('message').insertOne({ name, email, message });
-      res.status(201).send(insertResult);
-    }
-    catch (error){
+    } catch (error) {
       res.status(400).send(error.massage);
     }
   });
 
-
-
-
-
-/* GET users listing. */
-app.get('/api/login', async function (req, res) {
-  try {
-    const {email, password } = req.body; 
-   
-    const hashed_password = md5(password.toString());
-    const checkEmail = await db.collection('login').insertOne({email, message });
-      res.status(201).send(insertResult);
-    con.query(checkEmail, [email], (err, result, fields) => {
-      if(!result.length){
-        con.query(
-          mongodb, [email, hashed_password],
-        (err, result, fields) =>{
-          if(err){
-            res.send({ status: 0, data: err });
-          }else{
-            let token = jwt.sign({ data: result }, 'secret')
-            res.send({ status: 1, data: result, token : token });
-          }
-         
-        })
+  // Massage von Contact 'insertone
+  app.post("/api/message", async function (req, res) {
+    try {
+      const { name, email, message } = req.body;
+      if (name.trim().length === 0) {
+        res.status(400).send("Name is required");
+        return;
       }
-    });
-  } catch (error) {
-    res.send({ status: 0, error: error });
-  }
-});
-app.post('/api/login', async function (req, res) {
-  try {
-    const {email, password } = req.body; 
-   
-    const hashed_password = md5(password.toString())
-    const loginEmail = await db.collection('login').insertOne({email, message });
+      if (email.trim().length === 0) {
+        res.status(400).send("Email is required");
+        return;
+      }
+      if (message.trim().length === 0) {
+        res.status(400).send("Message is required");
+        return;
+      }
+      const insertResult = await db
+        .collection("message")
+        .insertOne({ name, email, message });
       res.status(201).send(insertResult);
-    con.query(
-      loginEmail, [email, hashed_password],
-    function(err, result, fields){
-      if(err){
-        res.send({ status: 0, data: err });
+    } catch (error) {
+      res.status(400).send(error.massage);
+    }
+  });
+
+  /* GET users listing. */
+  app.post("/api/login", async function (req, res) {
+    try {
+      const { email, password } = req.body;
+
+      const schema = new PasswordValidator();
+
+      schema
+      .is().min(6)                                    // Minimum length 6
+      .is().max(100)                                  // Maximum length 100
+      .has().uppercase()                              // Must have uppercase letters
+      .has().lowercase()                              // Must have lowercase letters
+      .has().digits(2)                                // Must have at least 2 digits
+      .has().not().spaces()                           // Should not have spaces
+      .is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
+
+      if(EmailValidator.validate(email) && schema.validate(password)){
+        const hashDigest = sha256(password);
+        const hashed_password = Base64.stringify(hmacSHA512(hashDigest, process.env.JWT_SECRET));
+        const userObject = await db
+          .collection("login")
+          .findOne({ email: email.toLowerCase(), hashed_password });
+
+        if (userObject) {
+          const token = jwt.sign({ _id: userObject._id, email: userObject.email }, process.env.JWT_SECRET);
+          res.status(201).send({ token: token });
+        } else {
+          res.status(400).send();
+        }
       }else{
-        let token = jwt.sign({ data: result }, 'secret')
-        res.send({ status: 1, data: result, token: token });
+        res.status(400).send();
       }
-     
-    })
-  } catch (error) {
-    res.send({ status: 0, error: error });
-  }
-});
+    } catch (error) {
+      console.log('error', error);
+      res.status(500).send({ error: error });
+    }
+  });
 
-  app.listen(3000, () =>{
-    console.log('server running');
+  app.post("/api/register", async function (req, res) {
+    try {
+      const { email, password } = req.body;
+      console.log('PASS VAL', PasswordValidator);
+      const schema = new PasswordValidator();
+
+      schema
+      .is().min(6)                                    // Minimum length 6
+      .is().max(100)                                  // Maximum length 100
+      .has().uppercase()                              // Must have uppercase letters
+      .has().lowercase()                              // Must have lowercase letters
+      .has().digits(2)                                // Must have at least 2 digits
+      .has().not().spaces()                           // Should not have spaces
+      .is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
+
+      if(EmailValidator.validate(email) && schema.validate(password)){
+        const hashDigest = sha256(password);
+        const hashed_password = Base64.stringify(hmacSHA512(hashDigest, process.env.JWT_SECRET));
+        const insertResult = await db
+        .collection("login")
+        .insertOne({ email: email.toLowerCase(), hashed_password });
+
+        const token = jwt.sign({ _id: insertResult.insertedId , email: email.toLowerCase() }, process.env.JWT_SECRET);
+        res.status(201).send({ token: token});
+      }else{
+        res.status(400).send();
+      }
+    } catch (error) {
+      console.log('error', error);
+      res.status(500).send({ error: error });
+    }
+  });
+
+  app.verifyToken = (req, res, next) => {
+    if (!req.headers.authorization) {
+        res.status(401).send({ message: "Unauthorized" })
+    } else {
+        jwt.verify(req.headers.authorization, process.env.JWT_SECRET, function (err, decoded) {
+            if(decoded){
+                console.log('DECODED TOKEN', decoded);
+                req.user = decoded.data;
+                next()
+            }else{
+                res.status(401).send({ message: "Unauthorized" })
+            }
+        })
+    }
+  }
+
+  app.get('/profile', app.verifyToken, async (req, res) => {
+   
+
+    res.send( { status: 1, data: {userName: 'rasyue', userWebsite: 'https://rasyue.com'} ,message: 'Successful'} )
+  });
+  
+  app.listen(3000, () => {
+    console.log("server running");
   });
 }
 

@@ -3,13 +3,14 @@
   <div id="body_login">
     <div class="inFormBackg round">
       <div class="inLoginForm">
-        <form onsubmit=" return false">
+        <form onsubmit=" return false" #userLogin = "ngForm" (ngSubmit)="onSubmit(userLogin)">
           <div class="title"><h2>Login Here</h2></div>
           <div class="inputGroup">
             <label for="email ">Email</label>
             <input
               type="email"
               placeholder="Enter Email"
+              name="email" required ngModel
               id="email"
               pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
             />
@@ -19,13 +20,14 @@
               <input
                 type="password"
                 placeholder="Enter Password"
-                ld="password"
+                id="password"
+                name="password" required ngModel
               />
             </div>
             <button class="submitForm" (click)="isUserLogin()">Log In</button>
             <button (click)="openSignup.emit()" title="Open Overlay Signup" class="submitForm">Sign Up</button>
             <div class = 'col-md-4 offset-4 mt-5' *ngIf="isLogin">
-              <h1>You are logged in</h1>
+              <!-- <h1>You are logged in</h1> -->
               <button class ="submitForm" (click)="logout()">Log-out</button>
           </div>
           <div class="social">

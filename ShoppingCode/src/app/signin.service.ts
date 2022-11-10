@@ -24,6 +24,7 @@ export class SigninService {
       return res;
     }));
   }
+
   putTypeRequest(url: any, payload: any) {
     return this.http.put(`${this.shoppingUrl}${url}`, payload).pipe(map(res => {
       return res;
@@ -33,9 +34,10 @@ export class SigninService {
 
   getUserDetails() {
     if(localStorage.getItem('userData')){
-      return localStorage.getItem('userData')
+      return localStorage.getItem('userData');
+
     }else{
-      return null
+      return null;
     }
   }
 
@@ -58,7 +60,7 @@ export class SigninService {
       return true;
     }
     // navigate to login page
-    this._router.navigate(['/login']);
+    this._router.navigate(['login']);
     // you can save redirect url so after authing we can move them back to the page they requested
     return false;
   }

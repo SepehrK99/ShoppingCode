@@ -54,7 +54,17 @@ async function main() {
           ],
         }
       */
-      const products = await db.collection("product").find({}).toArray();
+      const products = await db.collection("product").find(
+        // {
+        //   sizes: { $in: ['m', 'l'] },
+        //   'colors.name': 'black',
+        //   categories: 'dressed',
+        //   $and: [
+        //     { price: { $gte: 0 }},
+        //     { price: { $lte: 40 }},
+        //   ],
+        // }
+      ).toArray();
       res.send(products);
     } catch (error) {
       res.status(400).send(error.massage);

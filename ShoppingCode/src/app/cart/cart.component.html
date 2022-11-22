@@ -12,7 +12,12 @@
   <h3>CATEGORIES</h3>
   <div class="checklist categories">
     <ul>
-      <li *ngFor="let category of categories"><a (click)="clickCategory(category.id)"><span></span>{{ category.value }}</a></li>
+          <mat-selection-list #productsList (selectionChange)="onSelectionChange($event)">
+            <mat-list-option *ngFor="let category of categories; index as i" [value]="i" [selected]="selectedCategories.includes(i)">
+              {{ category.value }}
+            </mat-list-option>
+          </mat-selection-list>
+          {{ selectedCategories }}
         <!-- <li><a href=""><span></span>New Arivals</a></li>
           <li><a href=""><span></span>Accesories</a></li>
           <li><a href=""><span></span>Bags</a></li>
@@ -46,7 +51,12 @@
   <h3>SIZES</h3>
   <div class="checklist sizes">
     <ul>
-      <li *ngFor="let size of sizes"><a (click)="clickSize(size.id)"><span></span>{{ size.value }}</a></li>
+      <mat-selection-list #sizeList (selectionChange)="onSelectionSizeChange($event)">
+        <mat-list-option *ngFor="let size of sizes; index as i" [value]="i" [selected]="selectedSizes.includes(i)">
+          {{ size.value }}
+        </mat-list-option>
+      </mat-selection-list>
+      {{ selectedSizes }}
       <!-- <li><a href=""><span></span>XS</a></li>
       <li><a href=""><span></span>S</a></li>
       <li><a href=""><span></span>M</a></li>

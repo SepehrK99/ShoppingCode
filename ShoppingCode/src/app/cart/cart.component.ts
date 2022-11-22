@@ -1,4 +1,6 @@
 import { Component,} from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatListOption, MatSelectionListChange } from '@angular/material/list';
 
 @Component({
   selector: 'app-cart',
@@ -7,21 +9,34 @@ import { Component,} from '@angular/core';
 
 })
 export class CartComponent{
+  form: FormGroup;
+
+  constructor(fb: FormBuilder) {
+    this.form = fb.group({
+     selectedProducts:  new FormArray([])
+    });
+  }
+
   public categories = [
-    { id: 0, value: 'New Arivals' },
-    { id: 1, value: 'Accesories' },
-    { id: 2, value: 'Bags' },
-    { id: 3, value: 'Dressed' },
-    { id: 4, value: 'Jackets' },
-    { id: 5, value: 'jewelry' },
-    { id: 6, value: 'Shoes' },
-    { id: 7, value: 'Shirts' },
-    { id: 8, value: 'Sweaters' },
-    { id: 9, value: 'T-shirts' },
+      { id: 0, value: 'New Arivals' },
+      { id: 1, value: 'Accesories' },
+      { id: 2, value: 'Bags' },
+      { id: 3, value: 'Dressed' },
+      { id: 4, value: 'Jackets' },
+      { id: 5, value: 'jewelry' },
+      { id: 6, value: 'Shoes' },
+      { id: 7, value: 'Shirts' },
+      { id: 8, value: 'Sweaters' },
+      { id: 9, value: 'T-shirts' },
   ];
 
-  clickCategory(id: number) {
+  selectedCategories: number[] = JSON.parse(localStorage.getItem('selected') || '[]');
+  onSelectionChange(event: MatSelectionListChange): void {
+    this.selectedCategories = event.source.selectedOptions.selected.map((option: MatListOption) => option.value);
+  }
 
+  submit() {
+    console.log(this.form.value);
   }
 
   public colors = [
@@ -43,15 +58,35 @@ export class CartComponent{
 
   public sizes = [
     { id: 0, value: 'XS'},
-    { id: 0, value: 'S'},
-    { id: 0, value: 'M'},
-    { id: 0, value: 'L'},
-    { id: 0, value: 'XL'},
-    { id: 0, value: 'XXL'},
+    { id: 1, value: 'S'},
+    { id: 2, value: 'M'},
+    { id: 3, value: 'L'},
+    { id: 4, value: 'XL'},
+    { id: 5, value: 'XXL'},
   ];
 
-  clickSize(id: number) {
+  selectedSizes: number[] = JSON.parse(localStorage.getItem('selected') || '[]');
+  onSelectionSizeChange(event: MatSelectionListChange): void {
+    this.selectedSizes = event.source.selectedOptions.selected.map((option: MatListOption) => option.value);
+  }
 
+  onCheckboxSizes(value: string) {
+
+    const selectedProducts = (this.form.controls['sizes'] as FormArray);
+    if (value) {
+      selectedProducts.push(new FormControl(value));
+    } else {
+      const index = selectedProducts.controls
+      .findIndex(x => x.value === value);
+      selectedProducts.removeAt(index);
+    }
+  }
+
+  get resultSize() {
+    return this.sizes.filter(item => item.id && item.value);
+  }
+  checkboxSizes(id: number, value: string) {
+    console.log(id, value);
   }
 
   formatLabel(value: number) {

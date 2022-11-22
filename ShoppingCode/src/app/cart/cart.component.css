@@ -51,10 +51,10 @@ div.cart-icon-bottom{
 	font-size:14px;
 	font-weight:400;
 	list-style:none;
-	padding: 7px 0 7px 23px;
+	padding: 7px 0 7px 0px;
 }
 .checklist li span{
-	float:left;
+	float:right;
 	width:11px;
 	height:11px;
 	margin-left:-23px;

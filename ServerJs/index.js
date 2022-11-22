@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import qs from "qs";
-import { CURSOR_FLAGS, MongoClient } from "mongodb";
+import { CURSOR_FLAGS, Logger, MongoClient } from "mongodb";
 import * as dotenv from "dotenv";
 import sha256 from 'crypto-js/sha256.js';
 import hmacSHA512 from 'crypto-js/hmac-sha512.js';
@@ -89,8 +89,6 @@ async function main() {
   /* GET users listing. */
   app.post("/api/login", async function (req, res) {
     try {
-      const { email, password } = req.body;
-
       const schema = new PasswordValidator();
 
       schema
@@ -98,9 +96,9 @@ async function main() {
       .is().max(100)                                  // Maximum length 100
       .has().uppercase()                              // Must have uppercase letters
       .has().lowercase()                              // Must have lowercase letters
-      .has().digits(2)                                // Must have at least 2 digits
+      .has().digits(1)                                // Must have at least 2 digits
       .has().not().spaces()                           // Should not have spaces
-      .is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
+      .has().oneOf(['!', '"','§','@'])                          
 
       if(EmailValidator.validate(email) && schema.validate(password)){
         const hashDigest = sha256(password);
@@ -126,8 +124,12 @@ async function main() {
 
   app.post("/api/register", async function (req, res) {
     try {
-      const { email, password } = req.body;
+      const email = req.body.email;
+      const password = req.body.newPassword;
+
       console.log('PASS VAL', PasswordValidator);
+      console.log(email);
+      console.log(password);
       const schema = new PasswordValidator();
 
       schema
@@ -136,8 +138,8 @@ async function main() {
       .has().uppercase()                              // Must have uppercase letters
       .has().lowercase()                              // Must have lowercase letters
       .has().digits(2)                                // Must have at least 2 digits
-      .has().not().spaces()                           // Should not have spaces
-      .is().not().oneOf(['Passw0rd', 'Password123']); // Blacklist these values
+      .has().not().spaces()                            // Should not have spaces
+      .has().oneOf(['!', '?','§','@'])                
 
       if(EmailValidator.validate(email) && schema.validate(password)){
         const hashDigest = sha256(password);

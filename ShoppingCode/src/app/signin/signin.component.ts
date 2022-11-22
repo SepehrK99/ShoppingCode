@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { SigninService } from '../signin.service';
@@ -17,6 +17,7 @@ export class SigninComponent implements OnInit {
   constructor(
     private route:Router,
     private signin: SigninService,
+    private formBuilder: FormBuilder,
   ) { }
 
   go(){
@@ -35,7 +36,7 @@ export class SigninComponent implements OnInit {
     this.isUserLogin();
   }
 
-  onSubmit(form: NgForm) {
+  onSubmit(form: FormGroupDirective) {
 
     this.signin.postTypeRequest('register', form.value).pipe(catchError((error: HttpErrorResponse) => {
       console.log('ERR', error);
@@ -58,6 +59,53 @@ export class SigninComponent implements OnInit {
     if(this.signin.getUserDetails() != null){
         this.isLogin = true;
     }
+  }
+regex = "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])(?=.*[!/@/?/&/%/$]).{6,32}$"
+  passwordsMatching = false;
+  isConfirmPasswordDirty = false;
+  confirmPasswordClass = 'form-control';
+  newPassword = new FormControl(null, [
+    (c: AbstractControl) => Validators.required(c),
+    Validators.pattern(
+      this.regex
+    ),
+  ]);
+  confirmPassword = new FormControl(null, [
+    (c: AbstractControl) => Validators.required(c),
+    Validators.pattern(
+      this.regex
+    ),
+  ]);
+  email = new FormControl(null, []);
+  // ABCdef123!
+
+  resetPasswordForm = this.formBuilder.group(
+    {
+      newPassword: this.newPassword,
+      confirmPassword: this.confirmPassword,
+      email: this.email
+    },
+    {
+      validator: this.ConfirmedValidator('newPassword', 'confirmPassword'),
+    }
+  );
+
+  ConfirmedValidator(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+      if (
+        matchingControl.errors &&
+        !matchingControl.errors['confirmedValidator']
+      ) {
+        return;
+      }
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ confirmedValidator: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    };
   }
 
 }

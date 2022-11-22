@@ -19,7 +19,9 @@ export class SigninService {
       return res;
     }));
   }
+
   postTypeRequest(url: any, payload: any) {
+    console.log(payload);
     return this.http.post(`${this.shoppingUrl}${url}`, payload).pipe(map(res => {
       return res;
     }));

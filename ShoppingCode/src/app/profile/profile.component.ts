@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
 
 
-    this.singin.getTypeRequest('profile/profile').subscribe((res: any) => {
+    this.singin.getTypeRequest('profile').subscribe((res: any) => {
       this.protectedData = res
     });
 

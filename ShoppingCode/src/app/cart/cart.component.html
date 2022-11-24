@@ -13,56 +13,31 @@
   <div class="checklist categories">
     <ul>
           <mat-selection-list #productsList (selectionChange)="onSelectionChange($event)">
-            <mat-list-option *ngFor="let category of categories; index as i" [value]="i" [selected]="selectedCategories.includes(i)">
+            <mat-list-option *ngFor="let category of categories; index as i" [value]="category.key" [selected]="service.categoryFilter.includes(category.key)">
               {{ category.value }}
             </mat-list-option>
           </mat-selection-list>
-          {{ selectedCategories }}
-        <!-- <li><a href=""><span></span>New Arivals</a></li>
-          <li><a href=""><span></span>Accesories</a></li>
-          <li><a href=""><span></span>Bags</a></li>
-          <li><a href=""><span></span>Dressed</a></li>
-          <li><a href=""><span></span>Jackets</a></li>
-          <li><a href=""><span></span>jewelry</a></li>
-          <li><a href=""><span></span>Shoes</a></li>
-          <li><a href=""><span></span>Shirts</a></li>
-          <li><a href=""><span></span>Sweaters</a></li>
-          <li><a href=""><span></span>T-shirts</a></li> -->
       </ul>
   </div>
 
   <h3>COLORS</h3>
   <div class="checklist colors">
     <ul>
-      <li *ngFor="let color of colors"><a (click)="clickColor(color.id)"><span [style.background-color]="color.value" [style.border]="color.name == 'White' ? color.border : ''"></span>{{ color.name }}</a></li>
-      <!-- <li><a href=""><span style="background:#dcdcc6"></span>Beige</a></li>
-      <li><a href=""><span style="background:#222"></span>Black</a></li>
-      <li><a href=""><span style="background:#6e8cd5"></span>Blue</a></li>
-      <li><a href=""><span style="background:#f56060"></span>Brown</a></li>
-      <li><a href=""><span style="background:#44c28d"></span>Green</a></li>
-      <li><a href=""><span style="background:#999"></span>Grey</a></li>
-      <li><a href=""><span style="background:#f79858"></span>Orange</a></li>
-      <li><a href=""><span style="background:#b27ef8"></span>Purple</a></li>
-      <li><a href=""><span style="background:#f56060"></span>Red</a></li>
-      <li><a href=""><span style="background:#fff;border: 1px solid #e8e9eb;width:13px;height:13px;"></span>White</a></li> -->
+      <li *ngFor="let color of colors">
+        <a (click)="clickColor(color.key)" [style.font-weight]="service.colorFilter.includes(color.key) ? 700 : 400"><span [style.background-color]="color.value" [style.border]="color.name == 'White' ? color.border : ''"></span>{{ color.name }}</a>
+      </li>
     </ul>
+    {{ service.colorFilter }}
   </div>
 
   <h3>SIZES</h3>
   <div class="checklist sizes">
     <ul>
       <mat-selection-list #sizeList (selectionChange)="onSelectionSizeChange($event)">
-        <mat-list-option *ngFor="let size of sizes; index as i" [value]="i" [selected]="selectedSizes.includes(i)">
+        <mat-list-option *ngFor="let size of sizes; index as i" [value]="size.key" [selected]="service.sizeFilter.includes(size.key)">
           {{ size.value }}
         </mat-list-option>
       </mat-selection-list>
-      {{ selectedSizes }}
-      <!-- <li><a href=""><span></span>XS</a></li>
-      <li><a href=""><span></span>S</a></li>
-      <li><a href=""><span></span>M</a></li>
-      <li><a href=""><span></span>L</a></li>
-      <li><a href=""><span></span>XL</a></li>
-      <li><a href=""><span></span>XXL</a></li> -->
       </ul>
   </div>
 

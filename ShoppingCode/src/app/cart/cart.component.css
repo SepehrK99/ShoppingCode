@@ -47,11 +47,14 @@ div.cart-icon-bottom{
 	padding:0;
 }
 
+ul .mat-selection-list, li{
+  width: 219px;
+}
 .checklist ul li{
 	font-size:14px;
 	font-weight:400;
 	list-style:none;
-	padding: 7px 0 7px 0px;
+	padding: 7px 16px 7px 0px;
 }
 .checklist li span{
 	float:right;

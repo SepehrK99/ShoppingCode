@@ -56,12 +56,14 @@ export class LoginComponent implements OnInit {
 
   isUserLogin(){
     if(this.signin.getUserDetails() != null){
-        this.isLogin = true;
+      this.isLogin = true;
+
     }
   }
 
   logout(){
     this.signin.clearStorage()
     this.route.navigate(['']);
+    this.close.emit();
   }
 }

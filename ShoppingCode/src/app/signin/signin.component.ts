@@ -58,9 +58,11 @@ export class SigninComponent implements OnInit {
 
     if(this.signin.getUserDetails() != null){
         this.isLogin = true;
+        this.close.emit();
     }
+
   }
-regex = "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])(?=.*[!/@/?/&/%/$]).{6,32}$"
+regex = "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])(?=.*[!/@/?/&/%/$])[^ ]{6,32}$"
   passwordsMatching = false;
   isConfirmPasswordDirty = false;
   confirmPasswordClass = 'form-control';

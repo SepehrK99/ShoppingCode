@@ -36,6 +36,8 @@ async function main() {
 
   app.use(log);
 
+  
+
   app.get("/api/product", async function (req, res) {
     try {
       // Filter examples:
@@ -54,19 +56,20 @@ async function main() {
           ],
         }
       */
-      const products = await db.collection("product").find(
-        // {
-        //   sizes: { $in: ['m', 'l'] },
-        //   'colors.name': 'black',
-        //   categories: 'dressed',
-        //   $and: [
-        //     { price: { $gte: 0 }},
-        //     { price: { $lte: 40 }},
-        //   ],
-        // }
-      ).toArray();
+      const query = {};
+      if (req.query.categories) {
+        query.categories = { $in: req.query.categories.split(',') };
+      }
+      if (req.query.sizes) {
+        query.sizes = { $in: req.query.sizes.split(',') };
+      }
+      if (req.query.colors) {
+        query['colors.name'] = { $in: req.query.colors.split(',') };
+      }
+      const products = await db.collection("product").find(query).toArray();
       res.send(products);
     } catch (error) {
+      console.error(error.message);
       res.status(400).send(error.massage);
     }
   });
@@ -99,6 +102,9 @@ async function main() {
   /* GET users listing. */
   app.post("/api/login", async function (req, res) {
     try {
+      const email = req.body.email;
+      const password = req.body.password;
+
       const schema = new PasswordValidator();
 
       schema
@@ -106,9 +112,9 @@ async function main() {
       .is().max(100)                                  // Maximum length 100
       .has().uppercase()                              // Must have uppercase letters
       .has().lowercase()                              // Must have lowercase letters
-      .has().digits(1)                                // Must have at least 2 digits
+      .has().digits(2)                                // Must have at least 2 digits
       .has().not().spaces()                           // Should not have spaces
-      .has().oneOf(['!', '"','§','@'])                          
+      // .has().oneOf(['!', '"','§','@'])                          
 
       if(EmailValidator.validate(email) && schema.validate(password)){
         const hashDigest = sha256(password);
@@ -142,6 +148,7 @@ async function main() {
       console.log(password);
       const schema = new PasswordValidator();
 
+      const isEmailTaken = (await db.collection('login').count({ email })) > 0;
       schema
       .is().min(6)                                    // Minimum length 6
       .is().max(100)                                  // Maximum length 100
@@ -149,9 +156,9 @@ async function main() {
       .has().lowercase()                              // Must have lowercase letters
       .has().digits(2)                                // Must have at least 2 digits
       .has().not().spaces()                            // Should not have spaces
-      .has().oneOf(['!', '?','§','@'])                
+      // .has().oneOf(['!', '?','§','@'])                
 
-      if(EmailValidator.validate(email) && schema.validate(password)){
+      if(!isEmailTaken && EmailValidator.validate(email) && schema.validate(password)){
         const hashDigest = sha256(password);
         const hashed_password = Base64.stringify(hmacSHA512(hashDigest, process.env.JWT_SECRET));
         const insertResult = await db
@@ -161,6 +168,7 @@ async function main() {
         const token = jwt.sign({ _id: insertResult.insertedId , email: email.toLowerCase() }, process.env.JWT_SECRET);
         res.status(201).send({ token: token});
       }else{
+        console.error('Validation error', 'email valid', EmailValidator.validate(email), 'password valid', schema.validate(password));
         res.status(400).send();
       }
     } catch (error) {
@@ -185,7 +193,7 @@ async function main() {
     }
   }
 
-  app.get('/profile', app.verifyToken, async (req, res) => {
+  app.get('/api/profile', app.verifyToken, async (req, res) => {
    
 
     res.send( { status: 1, data: {userName: 'rasyue', userWebsite: 'https://rasyue.com'} ,message: 'Successful'} )

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product, ShoppingService } from '../shopping.service';
 
 @Component({
@@ -7,9 +8,11 @@ import { Product, ShoppingService } from '../shopping.service';
   styleUrls: ['./items.component.css']
 })
 export class ItemsComponent implements OnInit {
-  // public items: Product[] = [];
 
-  constructor(public service: ShoppingService) { }
+  constructor(
+    public service: ShoppingService,
+    private route:Router
+    ) { }
 
   ngOnInit(): void {
     this.loadItems();
@@ -17,5 +20,17 @@ export class ItemsComponent implements OnInit {
 
   loadItems() {
     this.service.loadProducts();
+  }
+
+  go(){
+    this.route.navigate(['/page']); // navigate to other page
+    }
+
+  goPlaces() {
+    this.route.navigate(['/', 'page-name']);
+  }
+
+  addToCart(product: Product) {
+    this.service.addToCart(product);
   }
 }

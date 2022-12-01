@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { SigninService } from '../signin.service';
 
 @Component({
@@ -11,18 +12,24 @@ export class ProfileComponent implements OnInit {
   public protectedData: any
   public loading: boolean = false
 
-  constructor(
-    private singin: SigninService,
+  @Output() close = new EventEmitter<void>();
 
-  ) { }
+  constructor(
+    private route:Router,
+    public signin: SigninService,
+  ) {}
 
   ngOnInit(): void {
-
-
-    this.singin.getTypeRequest('profile').subscribe((res: any) => {
+    this.signin.getTypeRequest('profile').subscribe((res: any) => {
       this.protectedData = res
     });
 
   }
 
+  logout(){
+    this.signin.clearStorage();
+    this.signin.isUserLogin();
+    this.route.navigate(['']);
+    this.close.emit();
+  }
 }

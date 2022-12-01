@@ -16,7 +16,7 @@ export class SigninComponent implements OnInit {
 
   constructor(
     private route:Router,
-    private signin: SigninService,
+    public signin: SigninService,
     private formBuilder: FormBuilder,
   ) { }
 
@@ -32,8 +32,6 @@ export class SigninComponent implements OnInit {
   public protectedData: any;
 
   ngOnInit() {
-
-    this.isUserLogin();
   }
 
   onSubmit(form: FormGroupDirective) {
@@ -46,6 +44,7 @@ export class SigninComponent implements OnInit {
       if (res) {
         this.signin.setDataInLocalStorage('userData', JSON.stringify(res.userData));
         this.signin.setDataInLocalStorage('token', res.token);
+        this.signin.isUserLogin();
         this.route.navigate(['profile']);
       } else {
         alert(res.msg);
@@ -53,15 +52,6 @@ export class SigninComponent implements OnInit {
     });
   }
 
-  isUserLogin(){
-    console.log(this.signin.getUserDetails() != null);
-
-    if(this.signin.getUserDetails() != null){
-        this.isLogin = true;
-        this.close.emit();
-    }
-
-  }
 regex = "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])(?=.*[!/@/?/&/%/$])[^ ]{6,32}$"
   passwordsMatching = false;
   isConfirmPasswordDirty = false;

@@ -1,4 +1,4 @@
-import { Component,} from '@angular/core';
+import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatListOption, MatSelectionListChange } from '@angular/material/list';
 import { Product, ShoppingService } from '../shopping.service';
@@ -9,10 +9,14 @@ import { Product, ShoppingService } from '../shopping.service';
   styleUrls: ['./cart.component.css'],
 
 })
-export class CartComponent{
+export class CartComponent {
+
   form: FormGroup;
 
-  constructor(fb: FormBuilder, public service: ShoppingService) {
+  constructor(
+    fb: FormBuilder,
+    public service: ShoppingService
+  ) {
     this.form = fb.group({
      selectedProducts:  new FormArray([])
     });
@@ -85,5 +89,8 @@ export class CartComponent{
     }
 
     return value;
+  }
+  clearCartItem(cartItems: Product) {
+    this.service.clearCartItem(cartItems);
   }
 }

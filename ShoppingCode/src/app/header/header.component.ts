@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SigninService } from '../signin.service';
 
 @Component({
   selector: 'app-header',
@@ -13,9 +14,10 @@ export class HeaderComponent implements OnInit {
 
   public isSignupOpen = false;
 
-  public isUserLogin = false;
-
-  constructor(private route:Router){}
+  constructor(
+    private route:Router,
+    public signin: SigninService
+  ){}
 
   go(){
   this.route.navigate(['/page']); // navigate to other page
@@ -39,20 +41,41 @@ export class HeaderComponent implements OnInit {
 
   openLogin() {
     //document.getElementById("myOverlay")!.style.display = "block";
-    this.isLoginOpen = true;
     this.isSignupOpen = false;
+    this.isLoginOpen = true;
+    console.log(this.isSignupOpen);
+    console.log(this.isLoginOpen);
+    console.log(this.signin.isUserLoggedIn);
+    console.log("OPEN LOGIN METHOD");
+    this.signin.isUserLogin();
   }
+
   closeLogin() {
     this.isLoginOpen = false;
+    console.log(this.isSignupOpen);
+    console.log(this.isLoginOpen);
+    console.log(this.signin.isUserLoggedIn);
+    console.log("CLOSE LOGIN METHOD");
+    this.signin.isUserLogin();
   }
 
   openSignup() {
     this.isSignupOpen = true;
     this.isLoginOpen =false;
+    console.log(this.isSignupOpen);
+    console.log(this.isLoginOpen);
+    console.log(this.signin.isUserLoggedIn);
+    console.log("OPEN SIGNUP METHOD");
+    this.signin.isUserLogin();
   }
 
   closeSignup() {
     this.isSignupOpen = false;
-    this.isUserLogin = true;
+    // TODO isUserLogin muss von wo anders auf true gesetzt werden
+    console.log(this.isSignupOpen);
+    console.log(this.isLoginOpen);
+    console.log(this.signin.isUserLoggedIn);
+    console.log("CLOSE SIGNUP METHOD");
+    this.signin.isUserLogin();
   }
 }

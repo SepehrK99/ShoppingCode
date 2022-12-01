@@ -15,6 +15,7 @@ import { SearchComponent } from './search/search.component';
 import { SigninComponent } from './signin/signin.component';
 import { StoreComponent } from './store/store.component';
 import { SigninService } from './signin.service';
+import { CartComponent } from './cart/cart.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/store', pathMatch: 'full' },
@@ -28,9 +29,10 @@ const routes: Routes = [
   { path: 'header', component: HeaderComponent },
   { path: 'footer', component: FooterComponent },
   { path: 'datenschutz', component: DatenschutzComponent },
+  { path: 'cart' , component: CartComponent},
   { path: 'contact', component: ContactComponent },
   { path: 'checkout', component: CheckoutComponent },
-  {path: 'profile', canActivate: [SigninService], component: ProfileComponent},
+  { path: 'profile', canActivate: [SigninService], component: ProfileComponent},
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

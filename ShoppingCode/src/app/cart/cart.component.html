@@ -5,7 +5,16 @@
         <div class="cart-icon-top"></div>
       </div>
       <div class="cart-icon-bottom"></div>
-      <div id="checkout">CHECKOUT</div>
+      <div class="colors-large">
+        <ul>
+          <li id="cartItemflex" *ngFor="let cartItem of service.cartItems">
+            <img *ngIf="cartItem.images?.length" [src]="cartItem.images[0]" alt="" />
+            <span class="price">${{ cartItem.price }}</span>
+            <button class="delete" (click)="clearCartItem(cartItem)">Delete</button>
+          </li>
+        </ul>
+      </div>
+      <button id="checkout" routerLink="/checkout" routerLinkActive="active" ariaCurrentWhenActive="page">CHECKOUT</button>
       <span class="empty">No items in cart.</span>
     </div>
 

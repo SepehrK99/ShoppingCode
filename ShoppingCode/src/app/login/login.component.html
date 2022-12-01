@@ -24,12 +24,9 @@
                 name="password" required ngModel
               />
             </div>
-            <button class="submitForm" (click)="isUserLogin()">Log In</button>
+            <button class="submitForm">Log In</button>
             <button (click)="openSignup.emit()" title="Open Overlay Signup" class="submitForm">Sign Up</button>
-            <div class = 'col-md-4 offset-4 mt-5' *ngIf="isLogin">
-              <!-- <h1>You are logged in</h1> -->
-              <button class ="submitForm" (click)="logout()">Log-out</button>
-          </div>
+
           <div class="social">
             <div class="insta">
               <a href="">

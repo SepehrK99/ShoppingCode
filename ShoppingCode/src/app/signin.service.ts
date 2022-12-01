@@ -9,10 +9,12 @@ import { map, Observable } from 'rxjs';
 export class SigninService {
   shoppingUrl = '/api/'
 
+  public isUserLoggedIn = false;
+
   constructor(
     private http: HttpClient,
     private _router: Router,
-    ) {}
+  ) {}
 
   getTypeRequest(url: any) {
     return this.http.get(`${this.shoppingUrl}${url}`).pipe(map(res => {
@@ -40,6 +42,18 @@ export class SigninService {
 
     }else{
       return null;
+    }
+  }
+
+  isUserLogin(){
+    console.log("localstorage has User: " + (this.getUserDetails() != null));
+
+    if(this.getUserDetails() != null){
+      this.isUserLoggedIn = true;
+      console.log("SETTING USER TO LOGGED IN AT Login ISUSERLOGIN");
+    }else {
+      this.isUserLoggedIn = false;
+      console.log("NOT SETTING USER TO LOGGED IN AT Login ISUSERLOGIN BECAUSE GETUSERDETAILS WAS FALSE");
     }
   }
 

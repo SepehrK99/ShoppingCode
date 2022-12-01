@@ -14,6 +14,19 @@ export interface Product {
     value: String,
   }[],
 }
+
+// interface anlegen CartItem
+// 2 Variablen
+// Product
+// 1 counter
+
+// 1 Feld was ein Array an Cartitems ist
+
+// Methode:
+// addCartItem(cartItem: CartItem)
+//  Wenn ein solches CartItemObjekt im cartItems Array ist dann counter++
+//  Sonst dieses objekt in cartitemarray packen
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,11 +34,14 @@ export class ShoppingService {
   shoppingUrl = '/api/'
 
   public products: Product[] = [];
+  public cartItems: Product[] = [];
   public categoryFilter: String[] = [];
   public sizeFilter: String[] = [];
   public colorFilter: String[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    ) {}
 
   public setCategoryFilter(filter: String[]) {
     this.categoryFilter = filter;
@@ -45,6 +61,7 @@ export class ShoppingService {
     this.getProducts().subscribe((data: Product[]) => {
       this.products = data;
     });
+
   }
 
   public getProducts() {
@@ -59,7 +76,9 @@ export class ShoppingService {
       filters.push(`colors=${encodeURIComponent(this.colorFilter.join(','))}`)
     }
     //?sizes=m,l&color=blue  httpclient docu anschauen
-    return this.http.get<Product[]>(`${this.shoppingUrl}product?${filters.join('&')}`)
+    let newUrl = `${this.shoppingUrl}product?${filters.join('&')}`;
+
+    return this.http.get<Product[]>(newUrl)
       .pipe(
         retry(3), // retry a failed request up to 3 times
         catchError(this.handleError) // then handle the error
@@ -78,5 +97,20 @@ export class ShoppingService {
     }
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));
+  }
+
+  addToCart(product: Product) {
+    this.cartItems.push(product);
+  }
+
+  getItems() {
+    return this.products;
+  }
+
+  clearCartItem(cartItem: Product) {
+    const index = this.cartItems.indexOf(cartItem);
+    if (index > -1) {
+      this.cartItems.splice(index, 1);
+    }
   }
 }

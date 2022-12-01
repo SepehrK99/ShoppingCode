@@ -19,7 +19,7 @@
         <span *ngFor="let size of product.sizes">{{ size }}</span>
       </div>
 
-      <button class="add-cart-large">Add To Cart</button>
+      <button class="add-cart-large" (click)="addToCart(product)">Add To Cart</button>
 
     </div>
     <div class="make3D">
@@ -27,21 +27,11 @@
         <div class="shadow"></div>
         <img *ngIf="product.images?.length" [src]="product.images[0]" alt="" />
         <div class="image_overlay"></div>
-        <div class="add_to_cart">Add to cart</div>
         <div class="stats">
           <div class="stats-container">
             <span class="product_price">${{ product.price }}</span>
             <span class="product_name">{{ product.name }}</span>
             <p>{{ product.description }}</p>
-
-            <div class="product-options">
-              <strong>SIZES</strong>
-              <span *ngIf="product.sizes?.length">{{ product.sizes.join(', ') }}</span>
-              <strong>COLORS</strong>
-              <div class="colors">
-                <div *ngFor="let color of product.colors" [class]="'c-' + color.name"><span></span></div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

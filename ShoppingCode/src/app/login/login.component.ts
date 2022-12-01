@@ -16,18 +16,16 @@ export class LoginComponent implements OnInit {
 
   @Output() openSignup = new EventEmitter<void>();
 
-  public isLogin = false;
   public protectedData: any;
 
   ngOnInit(): void {
-
-    this.isUserLogin();
+    this.signin.isUserLogin();
   }
 
   constructor(
     private route:Router,
-    private signin: SigninService,
-    ){}
+    public signin: SigninService,
+  ) {}
 
   go(){
   this.route.navigate(['/page']); // navigate to other page
@@ -47,23 +45,11 @@ export class LoginComponent implements OnInit {
       if (res) {
         this.signin.setDataInLocalStorage('userData', JSON.stringify(res.data));
         this.signin.setDataInLocalStorage('token', res.token);
+        this.signin.isUserLogin();
         this.route.navigate(['profile']);
       } else {
         alert(res.msg);
       }
     });
-  }
-
-  isUserLogin(){
-    if(this.signin.getUserDetails() != null){
-      this.isLogin = true;
-
-    }
-  }
-
-  logout(){
-    this.signin.clearStorage()
-    this.route.navigate(['']);
-    this.close.emit();
   }
 }

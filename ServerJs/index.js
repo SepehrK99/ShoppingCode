@@ -54,6 +54,14 @@ async function main() {
             { price: { $gte: 10 }},
             { price: { $lte: 40 }},
           ],
+          $or: [
+            { name: new RegExp(search, 'i') },
+            { description: new RegExp(search, 'i') },
+          ],
+        }
+
+        if (req.query.search) {
+          query["$or"] = ...
         }
       */
       const query = {};
@@ -127,7 +135,7 @@ async function main() {
           const token = jwt.sign({ _id: userObject._id, email: userObject.email }, process.env.JWT_SECRET);
           res.status(201).send({ token: token });
         } else {
-          res.status(400).send();
+          res.status(404).send();
         }
       }else{
         res.status(400).send();
@@ -143,9 +151,6 @@ async function main() {
       const email = req.body.email;
       const password = req.body.newPassword;
 
-      console.log('PASS VAL', PasswordValidator);
-      console.log(email);
-      console.log(password);
       const schema = new PasswordValidator();
 
       const isEmailTaken = (await db.collection('login').count({ email })) > 0;
@@ -168,7 +173,6 @@ async function main() {
         const token = jwt.sign({ _id: insertResult.insertedId , email: email.toLowerCase() }, process.env.JWT_SECRET);
         res.status(201).send({ token: token});
       }else{
-        console.error('Validation error', 'email valid', EmailValidator.validate(email), 'password valid', schema.validate(password));
         res.status(400).send();
       }
     } catch (error) {
@@ -183,8 +187,7 @@ async function main() {
     } else {
         jwt.verify(req.headers.authorization, process.env.JWT_SECRET, function (err, decoded) {
             if(decoded){
-                console.log('DECODED TOKEN', decoded);
-                req.user = decoded.data;
+                console.log('DECODED TOKEN', decoded); req.user = decoded;
                 next()
             }else{
                 res.status(401).send({ message: "Unauthorized" })
@@ -193,10 +196,52 @@ async function main() {
     }
   }
 
-  app.get('/api/profile', app.verifyToken, async (req, res) => {
-   
+  app.post('/api/profile', app.verifyToken, async function (req, res) {
+    try {
+      const { fullname, address, city, state, zip } = req.body;
+      if (fullname.trim().length === 0) {
+        res.status(400).send("Name is required");
+        return;
+      }
+      if (address.trim().length === 0) {
+        res.status(400).send("Message is required");
+        return;
+      }
+      if (city.trim().length === 0) {
+        res.status(400).send("Message is required");
+        return;
+      }
+      if (state.trim().length === 0) {
+        res.status(400).send("Message is required");
+        return;
+      }
+      if (zip.trim().length === 0) {
+        res.status(400).send("Message is required");
+        return;
+      }
+      const updateResult = await db
+        .collection("login")
+        .updateOne({ email: req.user.email }, { $set: { fullname, address, city, state, zip } });
+      res.status(201).send(updateResult);
+    } catch (error) {
+      res.status(400).send(error.massage);
+    }
+  });
 
-    res.send( { status: 1, data: {userName: 'rasyue', userWebsite: 'https://rasyue.com'} ,message: 'Successful'} )
+  app.get('/api/profile', app.verifyToken, async function(req, res){
+    try {
+      const findResult = await db
+        .collection("login")
+        .findOne({ email: req.user.email });
+      if (!findResult) {
+        res.status(404).send();
+        return;
+      }
+      delete findResult.hashed_password;
+      res.status(200).send(findResult);
+    } catch (error) {
+      res.status(400).send(error.massage);
+    }
   });
   
   app.listen(3000, () => {

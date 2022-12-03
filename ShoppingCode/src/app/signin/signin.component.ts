@@ -42,7 +42,6 @@ export class SigninComponent implements OnInit {
     })).subscribe((res: any) => {
       console.log('RES', res);
       if (res) {
-        this.signin.setDataInLocalStorage('userData', JSON.stringify(res.userData));
         this.signin.setDataInLocalStorage('token', res.token);
         this.signin.isUserLogin();
         this.route.navigate(['profile']);

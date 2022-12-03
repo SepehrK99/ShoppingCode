@@ -1,5 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { catchError, throwError } from 'rxjs';
 import { Product, ShoppingService } from '../shopping.service';
+import { SigninService } from '../signin.service';
 
 @Component({
   selector: 'app-checkout',
@@ -8,14 +12,31 @@ import { Product, ShoppingService } from '../shopping.service';
 })
 export class CheckoutComponent implements OnInit {
 
+  public user: any
+
   constructor(
-    public service: ShoppingService
+    public service: ShoppingService,
+    public signin: SigninService,
     ) {}
 
   ngOnInit(): void {
+    this.signin.getTypeRequest('profile').subscribe((res: any) => {
+      this.signin.setDataInLocalStorage('userData', JSON.stringify(res));
+      this.user = res
+      console.log('USER', this.user);
+    });
   }
 
   clearCartItem(cartItems: Product) {
     this.service.clearCartItem(cartItems);
+  }
+
+  onSubmit(form: NgForm){
+    this.signin.postTypeRequest('profile', form.value).pipe(catchError((error: HttpErrorResponse) => {
+      console.log('ERR', error);
+      return throwError(() => new Error('Something bad happened; please try again later.'));
+    })).subscribe((res: any) => {
+      console.log('RES', res);
+    });
   }
 }

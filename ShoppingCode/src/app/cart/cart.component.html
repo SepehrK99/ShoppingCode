@@ -9,13 +9,14 @@
         <ul>
           <li id="cartItemflex" *ngFor="let cartItem of service.cartItems">
             <img *ngIf="cartItem.images?.length" [src]="cartItem.images[0]" alt="" />
+            <span class="count">{{ cartItem.count }}</span>
             <span class="price">${{ cartItem.price }}</span>
-            <button class="delete" (click)="clearCartItem(cartItem)">Delete</button>
+            <button class="delete" (click)="clearCartItem(cartItem)">Remove</button>
           </li>
         </ul>
       </div>
-      <button id="checkout" routerLink="/checkout" routerLinkActive="active" ariaCurrentWhenActive="page">CHECKOUT</button>
-      <span class="empty">No items in cart.</span>
+      <button *ngIf="service.getItemCount() > 0" id="checkout" routerLink="/checkout" routerLinkActive="active" ariaCurrentWhenActive="page">CHECKOUT</button>
+      <span class="empty" *ngIf="service.getItemCount() === 0">No items in cart.</span>
     </div>
 
   <h3>CATEGORIES</h3>

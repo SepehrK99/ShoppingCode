@@ -13,7 +13,7 @@ export class SigninService {
 
   constructor(
     private http: HttpClient,
-    private _router: Router,
+    private router: Router,
   ) {}
 
   getTypeRequest(url: any) {
@@ -37,6 +37,7 @@ export class SigninService {
 
 
   getUserDetails() {
+    console.log('USER DATA', localStorage.getItem('userData'));
     if(localStorage.getItem('userData')){
       return localStorage.getItem('userData');
 
@@ -58,15 +59,15 @@ export class SigninService {
   }
 
   setDataInLocalStorage(variableName: string, data: string) {
-      localStorage.setItem(variableName, data);
+    localStorage.setItem(variableName, data);
   }
 
   getToken() {
-      return localStorage.getItem('token');
+    return localStorage.getItem('token');
   }
 
   clearStorage() {
-      localStorage.clear();
+    localStorage.clear();
   }
 
 
@@ -76,7 +77,7 @@ export class SigninService {
       return true;
     }
     // navigate to login page
-    this._router.navigate(['login']);
+    this.router.navigate(['login']);
     // you can save redirect url so after authing we can move them back to the page they requested
     return false;
   }

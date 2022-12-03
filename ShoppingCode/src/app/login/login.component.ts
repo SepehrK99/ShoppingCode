@@ -43,10 +43,12 @@ export class LoginComponent implements OnInit {
     })).subscribe((res: any) => {
       console.log('RES', res);
       if (res) {
-        this.signin.setDataInLocalStorage('userData', JSON.stringify(res.data));
         this.signin.setDataInLocalStorage('token', res.token);
-        this.signin.isUserLogin();
-        this.route.navigate(['profile']);
+        this.signin.getTypeRequest('profile').subscribe((res: any) => {
+          this.signin.setDataInLocalStorage('userData', JSON.stringify(res));
+          this.signin.isUserLogin();
+          this.route.navigate(['profile']);
+        });
       } else {
         alert(res.msg);
       }

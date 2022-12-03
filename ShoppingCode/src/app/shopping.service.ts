@@ -7,25 +7,15 @@ export interface Product {
   images: String[],
   name: String,
   description: String,
-  price: Number,
+  price: number,
   sizes: String[],
   colors: {
     name: String,
     value: String,
   }[],
+  count: number,
 }
 
-// interface anlegen CartItem
-// 2 Variablen
-// Product
-// 1 counter
-
-// 1 Feld was ein Array an Cartitems ist
-
-// Methode:
-// addCartItem(cartItem: CartItem)
-//  Wenn ein solches CartItemObjekt im cartItems Array ist dann counter++
-//  Sonst dieses objekt in cartitemarray packen
 
 @Injectable({
   providedIn: 'root'
@@ -100,7 +90,13 @@ export class ShoppingService {
   }
 
   addToCart(product: Product) {
-    this.cartItems.push(product);
+    let cartItem = this.cartItems.find(i => i._id === product._id);
+    if (cartItem) {
+      cartItem.count += 1;
+    } else {
+      this.cartItems.push({ ...product, count: 1 });
+    }
+    console.log('CART ITEMS', this.cartItems);
   }
 
   getItems() {
@@ -112,5 +108,13 @@ export class ShoppingService {
     if (index > -1) {
       this.cartItems.splice(index, 1);
     }
+  }
+
+  getItemCount() {
+    return this.cartItems.reduce((acc, val) => acc + val.count, 0);
+  }
+
+  getTotalPrice() {
+    return Math.round(this.cartItems.reduce((acc, val) => acc + (val.count * val.price), 0) * 100) / 100;
   }
 }

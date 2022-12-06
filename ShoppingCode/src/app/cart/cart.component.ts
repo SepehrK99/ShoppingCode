@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatListOption, MatSelectionListChange } from '@angular/material/list';
+import { MatSlider, MatSliderChange } from '@angular/material/slider';
+import { __values } from 'tslib';
 import { Product, ShoppingService } from '../shopping.service';
 
 @Component({
@@ -87,9 +89,13 @@ export class CartComponent {
     if (value >= 1) {
       return Math.round(value / 1) + '€';
     }
-
     return value;
   }
+
+  onSelectionPriceChange(event: MatSliderChange): void {
+    this.service.setPriceFilter(event.value ?? 900);
+  }
+
   clearCartItem(cartItems: Product) {
     this.service.clearCartItem(cartItems);
   }

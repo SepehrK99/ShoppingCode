@@ -3,9 +3,9 @@
     <div id="cart">
       <div class="cart-place">
         <div class="cart-icon-top"></div>
-      </div>
-      <div class="cart-icon-bottom"></div>
-      <div class="colors-large">
+        <div class="cart-icon-bottom"></div>
+        <div class="colors-large">
+        </div>
         <ul>
           <li id="cartItemflex" *ngFor="let cartItem of service.cartItems">
             <img *ngIf="cartItem.images?.length" [src]="cartItem.images[0]" alt="" />
@@ -37,7 +37,6 @@
         <a (click)="clickColor(color.key)" [style.font-weight]="service.colorFilter.includes(color.key) ? 700 : 400"><span [style.background-color]="color.value" [style.border]="color.name == 'White' ? color.border : ''"></span>{{ color.name }}</a>
       </li>
     </ul>
-    {{ service.colorFilter }}
   </div>
 
   <h3>SIZES</h3>
@@ -59,7 +58,12 @@
     step="1"
     min="0"
     max="900"
-    aria-label="units">
+    aria-label="units"
+    value="900"
+    (change)="onSelectionPriceChange($event)"
+    >
   </mat-slider>
 </div>
+
+
 

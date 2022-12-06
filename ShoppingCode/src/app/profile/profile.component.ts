@@ -3,6 +3,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
+import { ShoppingService } from '../shopping.service';
 import { SigninService } from '../signin.service';
 
 @Component({
@@ -20,6 +21,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private route:Router,
     public signin: SigninService,
+    public service: ShoppingService,
   ) {}
 
   ngOnInit(): void {

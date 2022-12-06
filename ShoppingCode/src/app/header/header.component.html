@@ -3,11 +3,15 @@
     <li><a routerLink="/store" routerLinkActive="active" ariaCurrentWhenActive="page">STORE</a></li>
     <li><a routerLink="/contact" routerLinkActive="active" ariaCurrentWhenActive="page">CONTACT</a></li>
   </ul>
+  <div class="titleflex">
+    <div class="title" id="flip-text">Lebas</div>
+    <div class="title">Lebas</div>
+  </div>
   <ul class="header2">
     <li>
       <a id="login">
         <i class="fa fa-user" *ngIf="!signin.isUserLoggedIn" (click)="openLogin()" title="Open Overlay Login"></i>
-        <i class="fa fa-user" *ngIf="signin.isUserLoggedIn" title="Open Overlay Login" routerLink="/profile" routerLinkActive="active" ariaCurrentWhenActive="page"></i>
+        <i class="fab fa-facebook" *ngIf="signin.isUserLoggedIn" title="Open Overlay Login" routerLink="/profile" routerLinkActive="active" ariaCurrentWhenActive="page"></i>
         <app-login *ngIf="isLoginOpen && !signin.isUserLoggedIn" (close)="closeLogin()" (openSignup)="openSignup()">
         </app-login>
         <app-signin *ngIf="isSignupOpen && !signin.isUserLoggedIn" (close)="closeSignup()"></app-signin>

@@ -14,6 +14,8 @@ export class HeaderComponent implements OnInit {
 
   public isSignupOpen = false;
 
+  public isLoggedIn = false;
+
   constructor(
     private route:Router,
     public signin: SigninService
@@ -28,7 +30,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.signin.isUserLogin();
+    this.isLoggedIn = this.signin.isUserLoggedIn;
   }
 
   openSearch() {

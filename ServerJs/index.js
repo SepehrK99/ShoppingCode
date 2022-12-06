@@ -37,7 +37,6 @@ async function main() {
   app.use(log);
 
   
-
   app.get("/api/product", async function (req, res) {
     try {
       // Filter examples:
@@ -59,13 +58,13 @@ async function main() {
             { description: new RegExp(search, 'i') },
           ],
         }
-
+        
         if (req.query.search) {
           query["$or"] = ...
         }
-      */
-      const query = {};
-      if (req.query.categories) {
+        */
+       const query = {};
+       if (req.query.categories) {
         query.categories = { $in: req.query.categories.split(',') };
       }
       if (req.query.sizes) {
@@ -74,6 +73,10 @@ async function main() {
       if (req.query.colors) {
         query['colors.name'] = { $in: req.query.colors.split(',') };
       }
+      if (req.query.prices) {
+        query.price = { $lt: parseInt(req.query.prices) };
+      }
+      console.log(query);
       const products = await db.collection("product").find(query).toArray();
       res.send(products);
     } catch (error) {
@@ -81,7 +84,7 @@ async function main() {
       res.status(400).send(error.massage);
     }
   });
-
+  
   // Massage von Contact 'insertone
   app.post("/api/message", async function (req, res) {
     try {
@@ -106,7 +109,7 @@ async function main() {
       res.status(400).send(error.massage);
     }
   });
-
+  
   /* GET users listing. */
   app.post("/api/login", async function (req, res) {
     try {
@@ -114,7 +117,7 @@ async function main() {
       const password = req.body.password;
 
       const schema = new PasswordValidator();
-
+      
       schema
       .is().min(6)                                    // Minimum length 6
       .is().max(100)                                  // Maximum length 100
@@ -145,12 +148,12 @@ async function main() {
       res.status(500).send({ error: error });
     }
   });
-
+  
   app.post("/api/register", async function (req, res) {
     try {
       const email = req.body.email;
       const password = req.body.newPassword;
-
+      
       const schema = new PasswordValidator();
 
       const isEmailTaken = (await db.collection('login').count({ email })) > 0;
@@ -162,14 +165,14 @@ async function main() {
       .has().digits(2)                                // Must have at least 2 digits
       .has().not().spaces()                            // Should not have spaces
       // .has().oneOf(['!', '?','§','@'])                
-
+      
       if(!isEmailTaken && EmailValidator.validate(email) && schema.validate(password)){
         const hashDigest = sha256(password);
         const hashed_password = Base64.stringify(hmacSHA512(hashDigest, process.env.JWT_SECRET));
         const insertResult = await db
         .collection("login")
         .insertOne({ email: email.toLowerCase(), hashed_password });
-
+        
         const token = jwt.sign({ _id: insertResult.insertedId , email: email.toLowerCase() }, process.env.JWT_SECRET);
         res.status(201).send({ token: token});
       }else{
@@ -187,53 +190,49 @@ async function main() {
     } else {
         jwt.verify(req.headers.authorization, process.env.JWT_SECRET, function (err, decoded) {
             if(decoded){
-                console.log('DECODED TOKEN', decoded); req.user = decoded;
+              console.log('DECODED TOKEN', decoded); req.user = decoded;
                 next()
-            }else{
+              }else{
                 res.status(401).send({ message: "Unauthorized" })
-            }
-        })
+              }
+            })
     }
   }
-
+  
   app.post('/api/profile', app.verifyToken, async function (req, res) {
     try {
-      const { fullname, address, city, state, zip } = req.body;
-      if (fullname.trim().length === 0) {
-        res.status(400).send("Name is required");
-        return;
+      let data = req.body;
+      console.log(data);
+      if (data.fullname.trim().length === 0) {
+        delete data['fullname'];
       }
-      if (address.trim().length === 0) {
-        res.status(400).send("Message is required");
-        return;
+      if (data.address.trim().length === 0) {
+        delete data['address'];
       }
-      if (city.trim().length === 0) {
-        res.status(400).send("Message is required");
-        return;
+      if (data.city.trim().length === 0) {
+        delete data['city'];
       }
-      if (state.trim().length === 0) {
-        res.status(400).send("Message is required");
-        return;
+      if (data.state.trim().length === 0) {
+        delete data['state'];
       }
-      if (zip.trim().length === 0) {
-        res.status(400).send("Message is required");
-        return;
+      if (data.zip.trim().length === 0) {
+        delete data['zip'];
       }
       const updateResult = await db
         .collection("login")
-        .updateOne({ email: req.user.email }, { $set: { fullname, address, city, state, zip } });
+        .updateOne({ email: req.user.email }, { $set: data });
       res.status(201).send(updateResult);
     } catch (error) {
-      res.status(400).send(error.massage);
+      res.status(400).send(error.message);
     }
   });
-
+  
   app.get('/api/profile', app.verifyToken, async function(req, res){
     try {
       const findResult = await db
         .collection("login")
         .findOne({ email: req.user.email });
-      if (!findResult) {
+        if (!findResult) {
         res.status(404).send();
         return;
       }
@@ -243,6 +242,57 @@ async function main() {
       res.status(400).send(error.massage);
     }
   });
+
+  // app.post("api/order", app.verifyToken, async function (req, res) {
+  //   try{
+  //     const { fullname, address, city, state, zip } = req.body;
+  //     if (fullname.trim().length === 0) {
+  //       res.status(400).send("Name is required");
+  //       return;
+  //     }
+  //     if (address.trim().length === 0) {
+  //       res.status(400).send("Message is required");
+  //       return;
+  //     }
+  //     if (city.trim().length === 0) {
+  //       res.status(400).send("Message is required");
+  //       return;
+  //     }
+  //     if (state.trim().length === 0) {
+  //       res.status(400).send("Message is required");
+  //       return;
+  //     }
+  //     if (zip.trim().length === 0) {
+  //       res.status(400).send("Message is required");
+  //       return;
+  //     }
+  //     if (product.trim().length === 0){
+  //       res.status(400).send("Message is required");
+  //       return;
+  //     }
+  //     const updateResult = await db
+  //       .collection("order")
+  //       .updateOne({ email: req.user.email }, { $set: { fullname, address, city, state, zip } });
+  //     res.status(201).send(updateResult);
+  //   } catch (error) {
+  //     res.status(400).send(error.massage);
+  //   }
+  // });
+  
+  // app.get("api/order", async function (req, res) {
+  //   try {
+  //     const findResult = await db
+  //       .collection("order")
+  //       .findOne({ email: req.user.product });
+  //     if (!findResult) {
+  //       res.status(404).send();
+  //       return;
+  //     }
+  //     res.status(200).send(findResult);
+  //   } catch (error) {
+  //     res.status(400).send(error.massage);
+  //   }
+  // });
   
   app.listen(3000, () => {
     console.log("server running");

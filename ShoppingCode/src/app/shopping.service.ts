@@ -28,6 +28,7 @@ export class ShoppingService {
   public categoryFilter: String[] = [];
   public sizeFilter: String[] = [];
   public colorFilter: String[] = [];
+  public priceFilter: number = 900;
 
   constructor(
     private http: HttpClient,
@@ -44,6 +45,11 @@ export class ShoppingService {
 
   public setColorFilter(filter: String[]) {
     this.colorFilter = filter;
+    this.loadProducts();
+  }
+
+  public setPriceFilter(filter: number) {
+    this.priceFilter = filter;
     this.loadProducts();
   }
 
@@ -65,6 +71,7 @@ export class ShoppingService {
     if (this.colorFilter.length > 0){
       filters.push(`colors=${encodeURIComponent(this.colorFilter.join(','))}`)
     }
+      filters.push(`prices=${encodeURIComponent(this.priceFilter)}`)
     //?sizes=m,l&color=blue  httpclient docu anschauen
     let newUrl = `${this.shoppingUrl}product?${filters.join('&')}`;
 
@@ -96,17 +103,19 @@ export class ShoppingService {
     } else {
       this.cartItems.push({ ...product, count: 1 });
     }
-    console.log('CART ITEMS', this.cartItems);
+    // console.log('CART ITEMS', this.cartItems);
   }
 
   getItems() {
     return this.products;
   }
 
-  clearCartItem(cartItem: Product) {
-    const index = this.cartItems.indexOf(cartItem);
-    if (index > -1) {
-      this.cartItems.splice(index, 1);
+  clearCartItem(product: Product) {
+    let cartItem = this.cartItems.find(i => i._id === product._id);
+    if (cartItem!.count > 1) {
+      cartItem!.count -= 1;
+    } else {
+      this.cartItems.splice(this.cartItems.indexOf(cartItem!), 1)
     }
   }
 

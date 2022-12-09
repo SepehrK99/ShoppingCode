@@ -36,28 +36,28 @@
         </label>
         <button  id="btn">Update</button>
         <button  class="logout" (click)="logout()">Log-out</button>
-      </form>
-    </div>
-  </div>
-  <div class="col-25">
-    <div class="container">
-      <h4>Your Orders
-        <span class="price" style="color:black">
-          <i class="fa fa-shopping-cart"></i>
-          <b>{{ service.getItemCount() }}</b>
-        </span>
-      </h4>
-      <div>
-        <div *ngFor="let cartItem of service.cartItems">
-          <span class="count">{{cartItem.count}}</span>
-          <span class="price">${{ cartItem.price }}</span>
-          <div>
-            <img *ngIf="cartItem.images?.length" [src]="cartItem.images[0]" alt="" /><a>{{ cartItem.name }}</a>
+        <div class="col-25">
+          <div class="container">
+            <h4>Your Orders
+              <span class="price" style="color:black">
+                <i class="fa fa-shopping-cart"></i>
+                <b>{{ service.getItemCount() }}</b>
+              </span>
+            </h4>
+            <div>
+              <div *ngFor="let cartItem of service.cartItems">
+                <span class="count">{{cartItem.count}}</span>
+                <span class="price">${{ cartItem.price }}</span>
+                <div>
+                  <img *ngIf="cartItem.images?.length" [src]="cartItem.images[0]" alt="" /><a>{{ cartItem.name }}</a>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <p>Total <span class="price" style="color:black"><b>${{ service.getTotalPrice() }}</b></span></p>
           </div>
         </div>
-      </div>
-      <hr>
-      <p>Total <span class="price" style="color:black"><b>${{ service.getTotalPrice() }}</b></span></p>
+      </form>
     </div>
   </div>
 </div>

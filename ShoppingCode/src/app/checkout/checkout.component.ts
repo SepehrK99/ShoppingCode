@@ -32,7 +32,8 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSubmit(form: NgForm){
-    this.signin.postTypeRequest('profile', form.value).pipe(catchError((error: HttpErrorResponse) => {
+    form.value['products'] = this.service.cartItems;
+    this.signin.postTypeRequest('order', form.value).pipe(catchError((error: HttpErrorResponse) => {
       console.log('ERR', error);
       return throwError(() => new Error('Something bad happened; please try again later.'));
     })).subscribe((res: any) => {

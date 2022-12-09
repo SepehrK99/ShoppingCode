@@ -243,41 +243,48 @@ async function main() {
     }
   });
 
-  // app.post("api/order", app.verifyToken, async function (req, res) {
-  //   try{
-  //     const { fullname, address, city, state, zip } = req.body;
-  //     if (fullname.trim().length === 0) {
-  //       res.status(400).send("Name is required");
-  //       return;
-  //     }
-  //     if (address.trim().length === 0) {
-  //       res.status(400).send("Message is required");
-  //       return;
-  //     }
-  //     if (city.trim().length === 0) {
-  //       res.status(400).send("Message is required");
-  //       return;
-  //     }
-  //     if (state.trim().length === 0) {
-  //       res.status(400).send("Message is required");
-  //       return;
-  //     }
-  //     if (zip.trim().length === 0) {
-  //       res.status(400).send("Message is required");
-  //       return;
-  //     }
-  //     if (product.trim().length === 0){
-  //       res.status(400).send("Message is required");
-  //       return;
-  //     }
-  //     const updateResult = await db
-  //       .collection("order")
-  //       .updateOne({ email: req.user.email }, { $set: { fullname, address, city, state, zip } });
-  //     res.status(201).send(updateResult);
-  //   } catch (error) {
-  //     res.status(400).send(error.massage);
-  //   }
-  // });
+  app.post("/api/order", app.verifyToken, async function (req, res) {
+    try{
+      const { fullname, address, city, state, zip, products } = req.body;
+      console.log("Name: " + fullname);
+      console.log("City: " + city);
+      console.log(req.body);
+      if (fullname.trim().length === 0) {
+        res.status(400).send("Name is required");
+        return;
+      }
+      if (address.trim().length === 0) {
+        res.status(400).send("Message is required");
+        return;
+      }
+      if (city.trim().length === 0) {
+        res.status(400).send("Message is required");
+        return;
+      }
+      if (state.trim().length === 0) {
+        res.status(400).send("Message is required");
+        return;
+      }
+      if (zip.trim().length === 0) {
+        res.status(400).send("Message is required");
+        return;
+      }
+      if (products.length === 0){
+        res.status(400).send("Products are required");
+        return;
+      }
+      console.log("Made it past checks");
+      const updateResult = await db
+      .collection("order")
+      .updateOne({ email: req.user.email }, { $set: { fullname, address, city, state, zip, products } });
+      console.log("mde it to insertion into db");
+      res.status(201).send(updateResult);
+    } catch (error) {
+      console.log("Ging scihef");
+      console.log(error);
+      res.status(400).send(error.massage);
+    }
+  });
   
   // app.get("api/order", async function (req, res) {
   //   try {

@@ -17,9 +17,7 @@
         <input id="newPassword" type="password" placeholder="Enter Password"
         formControlName="newPassword" name="password" required ngModel/>
         <div
-          *ngIf="
-            newPassword.invalid &&
-            (newPassword.dirty || newPassword.touched)"
+          *ngIf="newPassword.invalid && (newPassword.dirty || newPassword.touched)"
           class="form-text text-danger"
         >
           <div *ngIf="newPassword.errors?.['required']">
@@ -56,8 +54,5 @@
         <button [disabled]="confirmPassword.invalid" id="signup-button" type="submit" class="signup" >Sign Up</button>
       </div>
     </form>
-  </div>
-  <div class = 'col-md-4 offset-4 mt-5' *ngIf="isLogin">
-    <h5>You are logged in</h5>
   </div>
 </div>

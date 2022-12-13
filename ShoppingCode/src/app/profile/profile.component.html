@@ -34,8 +34,6 @@
         <label>
           <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
         </label>
-        <button  id="btn">Update</button>
-        <button  class="logout" (click)="logout()">Log-out</button>
         <div class="col-25">
           <div class="container">
             <h4>Your Orders
@@ -57,6 +55,8 @@
             <p>Total <span class="price" style="color:black"><b>${{ service.getTotalPrice() }}</b></span></p>
           </div>
         </div>
+        <button  id="btn">Update</button>
+        <button  class="logout" (click)="logout()">Log-out</button>
       </form>
     </div>
   </div>

@@ -31,6 +31,11 @@ export class ProfileComponent implements OnInit {
       console.log('USER', this.user);
     });
 
+    this.signin.getTypeRequest('order').subscribe((res: any) => {
+      this.signin.setDataInLocalStorage('userData', JSON.stringify(res));
+      this.user = res
+      console.log('USER', this.user);
+    });
   }
 
   logout(){
@@ -42,6 +47,13 @@ export class ProfileComponent implements OnInit {
 
   onSubmit(form: NgForm){
     this.signin.postTypeRequest('profile', form.value).pipe(catchError((error: HttpErrorResponse) => {
+      console.log('ERR', error);
+      return throwError(() => new Error('Something bad happened; please try again later.'));
+    })).subscribe((res: any) => {
+      console.log('RES', res);
+    });
+
+    this.signin.postTypeRequest('order', form.value).pipe(catchError((error: HttpErrorResponse) => {
       console.log('ERR', error);
       return throwError(() => new Error('Something bad happened; please try again later.'));
     })).subscribe((res: any) => {

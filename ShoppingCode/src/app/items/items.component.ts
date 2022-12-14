@@ -24,7 +24,7 @@ export class ItemsComponent implements OnInit {
 
   go(){
     this.route.navigate(['/page']); // navigate to other page
-    }
+  }
 
   goPlaces() {
     this.route.navigate(['/', 'page-name']);

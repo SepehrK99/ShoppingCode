@@ -12,7 +12,7 @@ import { SigninService } from '../signin.service';
 })
 export class CheckoutComponent implements OnInit {
 
-  public user: any
+  public user: any;
 
   constructor(
     public service: ShoppingService,
@@ -32,6 +32,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSubmit(form: NgForm){
+    console.log(form.value);
     form.value['products'] = this.service.cartItems;
     this.signin.postTypeRequest('order', form.value).pipe(catchError((error: HttpErrorResponse) => {
       console.log('ERR', error);

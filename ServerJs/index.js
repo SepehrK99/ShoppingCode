@@ -245,38 +245,29 @@ async function main() {
 
   app.post("/api/order", app.verifyToken, async function (req, res) {
     try{
-      const { fullname, address, city, state, zip, products } = req.body;
-      console.log("Name: " + fullname);
-      console.log("City: " + city);
-      console.log(req.body);
-      if (fullname.trim().length === 0) {
-        res.status(400).send("Name is required");
-        return;
+      let data = req.body;
+      if (data.fullname.trim().length === 0) {
+        delete data['fullname'];
       }
-      if (address.trim().length === 0) {
-        res.status(400).send("Message is required");
-        return;
+      if (data.address.trim().length === 0) {
+        delete data['address'];
       }
-      if (city.trim().length === 0) {
-        res.status(400).send("Message is required");
-        return;
+      if (data.city.trim().length === 0) {
+        delete data['city'];
       }
-      if (state.trim().length === 0) {
-        res.status(400).send("Message is required");
-        return;
+      if (data.state.trim().length === 0) {
+        delete data['state'];
       }
-      if (zip.trim().length === 0) {
-        res.status(400).send("Message is required");
-        return;
+      if (data.zip.trim().length === 0) {
+        delete data['zip'];
       }
-      if (products.length === 0){
-        res.status(400).send("Products are required");
-        return;
+      if (data.products.length === 0){
+        delete data['products'];
       }
       console.log("Made it past checks");
       const updateResult = await db
       .collection("order")
-      .updateOne({ email: req.user.email }, { $set: { fullname, address, city, state, zip, products } });
+      .insertOne({ data });
       console.log("mde it to insertion into db");
       res.status(201).send(updateResult);
     } catch (error) {
@@ -286,20 +277,20 @@ async function main() {
     }
   });
   
-  // app.get("api/order", async function (req, res) {
-  //   try {
-  //     const findResult = await db
-  //       .collection("order")
-  //       .findOne({ email: req.user.product });
-  //     if (!findResult) {
-  //       res.status(404).send();
-  //       return;
-  //     }
-  //     res.status(200).send(findResult);
-  //   } catch (error) {
-  //     res.status(400).send(error.massage);
-  //   }
-  // });
+  app.get("/api/order", async function (req, res) {
+    try {
+      const findResult = await db
+        .collection("order")
+        .findOne({ email: req.user.product });
+      if (!findResult) {
+        res.status(404).send();
+        return;
+      }
+      res.status(200).send(findResult);
+    } catch (error) {
+      res.status(400).send(error.massage);
+    }
+  });
   
   app.listen(3000, () => {
     console.log("server running");

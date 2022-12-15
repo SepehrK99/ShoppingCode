@@ -1,4 +1,4 @@
-import express from "express";
+import express, { request } from "express";
 import cors from "cors";
 import qs from "qs";
 import { CURSOR_FLAGS, Logger, MongoClient } from "mongodb";
@@ -16,9 +16,6 @@ const url = process.env.MONGODB_CONNECTION_STRING;
 const client = new MongoClient(url);
 
 function log(req, res, next) {
-  console.log("REQUESTED", req.url);
-  console.log("Query", req.query);
-  console.log("Body", req.body);
   next();
 }
 
@@ -36,7 +33,6 @@ async function main() {
 
   app.use(log);
 
-  
   app.get("/api/product", async function (req, res) {
     try {
       // Filter examples:
@@ -76,7 +72,13 @@ async function main() {
       if (req.query.prices) {
         query.price = { $lt: parseInt(req.query.prices) };
       }
-      console.log(query);
+      if (req.query.search) {
+        query["$or"] = [
+          { name: new RegExp(req.query.search, 'i') },
+          { description: new RegExp(req.query.search, 'i') },
+          { categories: new RegExp(req.query.search, 'i') },
+        ];
+      }
       const products = await db.collection("product").find(query).toArray();
       res.send(products);
     } catch (error) {
@@ -117,7 +119,7 @@ async function main() {
       const password = req.body.password;
 
       const schema = new PasswordValidator();
-      
+
       schema
       .is().min(6)                                    // Minimum length 6
       .is().max(100)                                  // Maximum length 100
@@ -144,7 +146,6 @@ async function main() {
         res.status(400).send();
       }
     } catch (error) {
-      console.log('error', error);
       res.status(500).send({ error: error });
     }
   });
@@ -153,7 +154,7 @@ async function main() {
     try {
       const email = req.body.email;
       const password = req.body.newPassword;
-      
+
       const schema = new PasswordValidator();
 
       const isEmailTaken = (await db.collection('login').count({ email })) > 0;
@@ -179,30 +180,28 @@ async function main() {
         res.status(400).send();
       }
     } catch (error) {
-      console.log('error', error);
       res.status(500).send({ error: error });
     }
   });
 
   app.verifyToken = (req, res, next) => {
     if (!req.headers.authorization) {
-        res.status(401).send({ message: "Unauthorized" })
+      res.status(401).send({ message: "Unauthorized" })
     } else {
-        jwt.verify(req.headers.authorization, process.env.JWT_SECRET, function (err, decoded) {
-            if(decoded){
-              console.log('DECODED TOKEN', decoded); req.user = decoded;
-                next()
-              }else{
-                res.status(401).send({ message: "Unauthorized" })
-              }
-            })
+      jwt.verify(req.headers.authorization, process.env.JWT_SECRET, function (err, decoded) {
+      if(decoded){
+        req.user = decoded;
+          next()
+        }else{
+          res.status(401).send({ message: "Unauthorized" })
+        }
+      })
     }
   }
   
   app.post('/api/profile', app.verifyToken, async function (req, res) {
     try {
       let data = req.body;
-      console.log(data);
       if (data.fullname.trim().length === 0) {
         delete data['fullname'];
       }
@@ -264,24 +263,22 @@ async function main() {
       if (data.products.length === 0){
         delete data['products'];
       }
-      console.log("Made it past checks");
-      const updateResult = await db
-      .collection("order")
-      .insertOne({ data });
-      console.log("mde it to insertion into db");
-      res.status(201).send(updateResult);
+
+      const insertedUser = await db
+        .collection("order")  
+        .insertOne({email: req.user.email, data: data});
+        res.status(201).send(insertedUser);
     } catch (error) {
-      console.log("Ging scihef");
-      console.log(error);
       res.status(400).send(error.massage);
     }
   });
-  
-  app.get("/api/order", async function (req, res) {
+
+  app.post("/api/order-history", app.verifyToken, async function (req, res) {
+    req.user.email;
     try {
       const findResult = await db
         .collection("order")
-        .findOne({ email: req.user.product });
+        .find({ email: req.user.email }).toArray();
       if (!findResult) {
         res.status(404).send();
         return;
@@ -291,9 +288,8 @@ async function main() {
       res.status(400).send(error.massage);
     }
   });
-  
+
   app.listen(3000, () => {
-    console.log("server running");
   });
 }
 

@@ -15,6 +15,9 @@ export class ProfileComponent implements OnInit {
 
   public user: any
   public loading: boolean = false
+  public userHistory: any
+  public sum: any;
+  public count: any;
 
   @Output() close = new EventEmitter<void>();
 
@@ -28,13 +31,13 @@ export class ProfileComponent implements OnInit {
     this.signin.getTypeRequest('profile').subscribe((res: any) => {
       this.signin.setDataInLocalStorage('userData', JSON.stringify(res));
       this.user = res
-      console.log('USER', this.user);
     });
 
-    this.signin.getTypeRequest('order').subscribe((res: any) => {
+    this.signin.postTypeRequest('order-history', localStorage.getItem('userData')).subscribe((res: any) => {
       this.signin.setDataInLocalStorage('userData', JSON.stringify(res));
-      this.user = res
-      console.log('USER', this.user);
+      this.userHistory = res
+      this.getTotalPrice();
+      this.getTotalCount();
     });
   }
 
@@ -47,17 +50,28 @@ export class ProfileComponent implements OnInit {
 
   onSubmit(form: NgForm){
     this.signin.postTypeRequest('profile', form.value).pipe(catchError((error: HttpErrorResponse) => {
-      console.log('ERR', error);
       return throwError(() => new Error('Something bad happened; please try again later.'));
     })).subscribe((res: any) => {
-      console.log('RES', res);
     });
+  }
 
-    this.signin.postTypeRequest('order', form.value).pipe(catchError((error: HttpErrorResponse) => {
-      console.log('ERR', error);
-      return throwError(() => new Error('Something bad happened; please try again later.'));
-    })).subscribe((res: any) => {
-      console.log('RES', res);
-    });
+  getTotalPrice() {
+    var sum = 0;
+    for (let index = 0; index < this.userHistory.length; index++) {
+      for (let j = 0; j < this.userHistory[index].data.products.length; j++) {
+        sum += this.userHistory[index].data.products[j].price;
+      }
+    }
+    this.sum = sum;
+  }
+
+  getTotalCount() {
+    var count = 0;
+    for (let index = 0; index < this.userHistory.length; index++) {
+      for (let j = 0; j < this.userHistory[index].data.products.length; j++) {
+        count += this.userHistory[index].data.products[j].count;
+      }
+    }
+    this.count = count;
   }
 }

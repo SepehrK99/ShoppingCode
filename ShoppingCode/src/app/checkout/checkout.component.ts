@@ -12,18 +12,19 @@ import { SigninService } from '../signin.service';
 })
 export class CheckoutComponent implements OnInit {
 
-  public user: any;
+  public user: any = {};
+  public isLoginOpen = false;
+  public isSignupOpen = false;
 
   constructor(
     public service: ShoppingService,
     public signin: SigninService,
-    ) {}
+  ) {}
 
   ngOnInit(): void {
     this.signin.getTypeRequest('profile').subscribe((res: any) => {
       this.signin.setDataInLocalStorage('userData', JSON.stringify(res));
       this.user = res
-      console.log('USER', this.user);
     });
   }
 
@@ -32,13 +33,15 @@ export class CheckoutComponent implements OnInit {
   }
 
   onSubmit(form: NgForm){
-    console.log(form.value);
     form.value['products'] = this.service.cartItems;
     this.signin.postTypeRequest('order', form.value).pipe(catchError((error: HttpErrorResponse) => {
-      console.log('ERR', error);
       return throwError(() => new Error('Something bad happened; please try again later.'));
     })).subscribe((res: any) => {
-      console.log('RES', res);
     });
+  }
+
+  openLogin() {
+    this.isLoginOpen = true;
+    this.signin.isUserLogin();
   }
 }

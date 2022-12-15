@@ -1,10 +1,12 @@
 <div id="myOverlay" class="overlay">
   <span class="closebtn" (click)="close.emit()" title="Close Overlay">x</span>
   <div class="overlay-content">
-    <!-- TODO reroute zu der result page der Suche -->
     <form action="#">
-      <input type="text" placeholder="Search.." name="search">
-      <button type="submit"><i class="fa fa-search"></i></button>
+      <input type="text" placeholder="Search.." name="search" [(ngModel)]="search">
+      <button type="button" (click)="getSearch()">
+        <i class="fa fa-search"></i>
+        <a></a>
+      </button>
     </form>
   </div>
 </div>

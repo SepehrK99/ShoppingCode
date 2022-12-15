@@ -23,7 +23,7 @@ export class ItemsComponent implements OnInit {
   }
 
   go(){
-    this.route.navigate(['/page']); // navigate to other page
+    this.route.navigate(['/page']);
   }
 
   goPlaces() {

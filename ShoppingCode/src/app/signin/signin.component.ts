@@ -35,16 +35,17 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit(form: FormGroupDirective) {
-
     this.signin.postTypeRequest('register', form.value).pipe(catchError((error: HttpErrorResponse) => {
-      console.log('ERR', error);
       return throwError(() => new Error('Something bad happened; please try again later.'));
     })).subscribe((res: any) => {
-      console.log('RES', res);
       if (res) {
         this.signin.setDataInLocalStorage('token', res.token);
-        this.signin.isUserLogin();
-        this.route.navigate(['profile']);
+        this.signin.getTypeRequest('profile').subscribe((res: any) => {
+          this.signin.setDataInLocalStorage('userData', JSON.stringify(res));
+          this.signin.isUserLogin();
+          this.route.navigate(['profile']);
+          this.close.emit();
+        });
       } else {
         alert(res.msg);
       }
@@ -68,7 +69,6 @@ regex = "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])(?=.*[!/@/?/&/%/$])[^ ]{6,32}$"
     ),
   ]);
   email = new FormControl(null, []);
-  // ABCdef123!
 
   resetPasswordForm = this.formBuilder.group(
     {
@@ -98,5 +98,4 @@ regex = "^(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])(?=.*[!/@/?/&/%/$])[^ ]{6,32}$"
       }
     };
   }
-
 }

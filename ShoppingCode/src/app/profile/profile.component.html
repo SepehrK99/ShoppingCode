@@ -1,35 +1,29 @@
 <div class="row">
   <div class="col-75">
     <div class="container">
-      <form
-        class="form"
-        #userProfile="ngForm"
-        (ngSubmit)="onSubmit(userProfile)"
-      >
+      <form class="form" #userProfile="ngForm" (ngSubmit)="onSubmit(userProfile)">
         <div class="row">
           <div class="col-50">
             <h3>Profile</h3>
             <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-            <input type="text" id="fname" name="fullname" required ngModel placeholder="John M. Doe" [value]="user?.fullname">
+            <input type="text" id="fname" name="fullname" required ngModel placeholder="John M. Doe" [value]="user?.fullname || ''">
             <label for="email"><i class="fa fa-envelope"></i> Email</label>
             <input type="text" id="email" name="email" required ngModel placeholder="john@example.com" disabled="disabled" [value]="user?.email">
             <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-            <input type="text" id="adr" name="address" required ngModel placeholder="542 W. 15th Street" [value]="user?.address">
+            <input type="text" id="adr" name="address" required ngModel placeholder="542 W. 15th Street" [value]="user?.address || ''">
             <label for="city"><i class="fa fa-institution"></i> City</label>
-            <input type="text" id="city" name="city" required ngModel placeholder="New York" [value]="user?.city">
-
+            <input type="text" id="city" name="city" required ngModel placeholder="New York" [value]="user?.city || ''">
             <div class="row">
               <div class="col-50">
                 <label for="state">State</label>
-                <input type="text" id="state" name="state" required ngModel placeholder="NY" [value]="user?.state">
+                <input type="text" id="state" name="state" required ngModel placeholder="NY" [value]="user?.state || ''">
               </div>
               <div class="col-50">
                 <label for="zip">Zip</label>
-                <input type="text" id="zip" name="zip" required ngModel placeholder="10001" [value]="user?.zip">
+                <input type="text" id="zip" name="zip" required ngModel placeholder="10001" [value]="user?.zip || ''">
               </div>
             </div>
           </div>
-
         </div>
         <label>
           <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
@@ -39,24 +33,31 @@
             <h4>Your Orders
               <span class="price" style="color:black">
                 <i class="fa fa-shopping-cart"></i>
-                <b>{{ service.getItemCount() }}</b>
+                <b>{{ this.count }}</b>
               </span>
             </h4>
             <div>
-              <div *ngFor="let cartItem of service.cartItems">
-                <span class="count">{{cartItem.count}}</span>
-                <span class="price">${{ cartItem.price }}</span>
-                <div>
-                  <img *ngIf="cartItem.images?.length" [src]="cartItem.images[0]" alt="" /><a>{{ cartItem.name }}</a>
+              <div *ngFor="let order of this.userHistory">
+                <div *ngFor="let product of order.data.products">
+                  <span class="count">{{ product.count }}</span>
+                  <span class="price">${{ product.price }}</span>
+                  <div>
+                    <img *ngIf="product.images?.length" [src]="product.images[0]" alt=""/>
+                    <a>{{ product.name }}</a>
+                  </div>
                 </div>
               </div>
             </div>
             <hr>
-            <p>Total <span class="price" style="color:black"><b>${{ service.getTotalPrice() }}</b></span></p>
+            <p>Total
+              <span class="price" style="color:black">
+                <b>${{ this.sum }}</b>
+              </span>
+            </p>
           </div>
         </div>
-        <button  id="btn">Update</button>
-        <button  class="logout" (click)="logout()">Log-out</button>
+        <button id="btn">Update</button>
+        <button class="logout" (click)="logout()">Log-out</button>
       </form>
     </div>
   </div>

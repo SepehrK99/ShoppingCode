@@ -34,9 +34,7 @@ export class SigninService {
     }));
   }
 
-
   getUserDetails() {
-    console.log('USER DATA', localStorage.getItem('userData'));
     if(localStorage.getItem('userData')){
       return localStorage.getItem('userData');
     }else{
@@ -45,14 +43,10 @@ export class SigninService {
   }
 
   isUserLogin(){
-    console.log("localstorage has User: " + (this.getUserDetails() != null));
-
     if(this.getUserDetails() != null){
       this.isUserLoggedIn = true;
-      console.log("SETTING USER TO LOGGED IN AT Login ISUSERLOGIN");
     }else {
       this.isUserLoggedIn = false;
-      console.log("NOT SETTING USER TO LOGGED IN AT Login ISUSERLOGIN BECAUSE GETUSERDETAILS WAS FALSE");
     }
   }
 
@@ -68,19 +62,13 @@ export class SigninService {
     localStorage.clear();
   }
 
-
-
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     if (this.getToken()) {
       return true;
     }
-    // navigate to login page
     this.router.navigate(['login']);
-    // you can save redirect url so after authing we can move them back to the page they requested
     return false;
   }
-
-
 
   intercept(
     request: HttpRequest<any>,

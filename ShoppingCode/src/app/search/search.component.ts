@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ShoppingService } from '../shopping.service';
 
 @Component({
   selector: 'app-search',
@@ -8,15 +9,17 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class SearchComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
 
-  constructor() { // Open the full screen search box
+  public search: string = '';
 
+  constructor(public service: ShoppingService) {
+    this.search = service.search;
   }
 
   ngOnInit(): void {
   }
 
-  // closeSearch() {
-  //   // document.getElementById("myOverlay")!.style.display = "none";
-  // }
-
+  getSearch(): void {
+    console.log('SETTING SEARCH', this.search);
+    this.service.setSearch(this.search);
+  }
 }

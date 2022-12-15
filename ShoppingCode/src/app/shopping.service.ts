@@ -28,6 +28,7 @@ export class ShoppingService {
   public sizeFilter: String[] = [];
   public colorFilter: String[] = [];
   public priceFilter: number = 900;
+  public search: string = '';
 
   constructor(
     private http: HttpClient,
@@ -52,6 +53,11 @@ export class ShoppingService {
     this.loadProducts();
   }
 
+  public setSearch(search: string) {
+    this.search = search;
+    this.loadProducts();
+  }
+
   public loadProducts() {
     this.getProducts().subscribe((data: Product[]) => {
       this.products = data;
@@ -70,28 +76,26 @@ export class ShoppingService {
     if (this.colorFilter.length > 0){
       filters.push(`colors=${encodeURIComponent(this.colorFilter.join(','))}`)
     }
+    if (this.search.length > 0){
+      filters.push(`search=${encodeURIComponent(this.search)}`);
+    }
       filters.push(`prices=${encodeURIComponent(this.priceFilter)}`)
-    //?sizes=m,l&color=blue  httpclient docu anschauen
     let newUrl = `${this.shoppingUrl}product?${filters.join('&')}`;
 
     return this.http.get<Product[]>(newUrl)
       .pipe(
-        retry(3), // retry a failed request up to 3 times
-        catchError(this.handleError) // then handle the error
+        retry(3),
+        catchError(this.handleError)
       );
   }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
-      // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', error.error);
     } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
       console.error(
         `Backend returned code ${error.status}, body was: `, error.error);
     }
-    // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 
@@ -102,7 +106,6 @@ export class ShoppingService {
     } else {
       this.cartItems.push({ ...product, count: 1 });
     }
-    // console.log('CART ITEMS', this.cartItems);
   }
 
   getItems() {

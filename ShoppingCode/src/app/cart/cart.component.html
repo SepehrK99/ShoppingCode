@@ -8,7 +8,7 @@
         </div>
         <ul>
           <li id="cartItemflex" *ngFor="let cartItem of service.cartItems">
-            <img *ngIf="cartItem.images?.length" [src]="cartItem.images[0]" alt="" />
+            <img *ngIf="cartItem.images?.length" [src]="cartItem.images[0]" alt=""/>
             <span class="count">{{ cartItem.count }}</span>
             <span class="price">${{ cartItem.price }}</span>
             <button class="delete" (click)="clearCartItem(cartItem)">Remove</button>
@@ -18,27 +18,26 @@
       <button *ngIf="service.getItemCount() > 0" id="checkout" routerLink="/checkout" routerLinkActive="active" ariaCurrentWhenActive="page">CHECKOUT</button>
       <span class="empty" *ngIf="service.getItemCount() === 0">No items in cart.</span>
     </div>
-
   <h3>CATEGORIES</h3>
   <div class="checklist categories">
     <ul>
-          <mat-selection-list #productsList (selectionChange)="onSelectionChange($event)">
-            <mat-list-option *ngFor="let category of categories; index as i" [value]="category.key" [selected]="service.categoryFilter.includes(category.key)">
-              {{ category.value }}
-            </mat-list-option>
-          </mat-selection-list>
-      </ul>
+      <mat-selection-list #productsList (selectionChange)="onSelectionChange($event)">
+        <mat-list-option *ngFor="let category of categories; index as i" [value]="category.key" [selected]="service.categoryFilter.includes(category.key)">
+          {{ category.value }}
+        </mat-list-option>
+      </mat-selection-list>
+    </ul>
   </div>
-
   <h3>COLORS</h3>
   <div class="checklist colors">
     <ul>
       <li *ngFor="let color of colors">
-        <a (click)="clickColor(color.key)" [style.font-weight]="service.colorFilter.includes(color.key) ? 700 : 400"><span [style.background-color]="color.value" [style.border]="color.name == 'White' ? color.border : ''"></span>{{ color.name }}</a>
+        <a (click)="clickColor(color.key)" [style.font-weight]="service.colorFilter.includes(color.key) ? 700 : 400">
+          <span [style.background-color]="color.value" [style.border]="color.name == 'White' ? color.border : ''"></span>{{ color.name }}
+        </a>
       </li>
     </ul>
   </div>
-
   <h3>SIZES</h3>
   <div class="checklist sizes">
     <ul>
@@ -47,9 +46,8 @@
           {{ size.value }}
         </mat-list-option>
       </mat-selection-list>
-      </ul>
+    </ul>
   </div>
-
   <h3>PRICE RANGE</h3>
   <mat-slider
     thumbLabel
@@ -60,8 +58,7 @@
     max="900"
     aria-label="units"
     value="900"
-    (change)="onSelectionPriceChange($event)"
-    >
+    (change)="onSelectionPriceChange($event)">
   </mat-slider>
 </div>
 

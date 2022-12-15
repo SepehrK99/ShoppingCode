@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   go(){
-  this.route.navigate(['/page']); // navigate to other page
+  this.route.navigate(['/page']);
 	}
 
   goPlaces() {
@@ -36,18 +36,16 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    console.log('Your form data : ', form.value);
     this.signin.postTypeRequest('login', form.value).pipe(catchError((error: HttpErrorResponse) => {
-      console.log('ERR', error);
       return throwError(() => new Error('Something bad happened; please try again later.'));
     })).subscribe((res: any) => {
-      console.log('RES', res);
       if (res) {
         this.signin.setDataInLocalStorage('token', res.token);
         this.signin.getTypeRequest('profile').subscribe((res: any) => {
           this.signin.setDataInLocalStorage('userData', JSON.stringify(res));
           this.signin.isUserLogin();
           this.route.navigate(['profile']);
+          this.close.emit();
         });
       } else {
         alert(res.msg);

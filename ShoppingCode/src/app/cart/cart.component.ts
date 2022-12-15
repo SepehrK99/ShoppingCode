@@ -37,14 +37,12 @@ export class CartComponent {
       { id: 9, key: 'tshirts', value: 'T-shirts' },
   ];
 
-  // selectedCategories: String[] = JSON.parse(localStorage.getItem('selected') || '[]');
   onSelectionChange(event: MatSelectionListChange): void {
     const selectedCategories = event.source.selectedOptions.selected.map((option: MatListOption) => option.value);
     this.service.setCategoryFilter(selectedCategories);
   }
 
   submit() {
-    console.log(this.form.value);
   }
 
   public colors = [
@@ -60,14 +58,14 @@ export class CartComponent {
     { id: 9, key: 'white' , value: '#fff', name: 'White', border: '1px solid #e8e9eb' },
   ];
 
-  clickColor(key: String): void  {
-      const newSelectedColors = [...this.service.colorFilter];
-      if (newSelectedColors.includes(key)) {
-        newSelectedColors.splice(newSelectedColors.indexOf(key), 1);
-      } else {
-        newSelectedColors.push(key);
-      }
-      this.service.setColorFilter(newSelectedColors);
+  clickColor(key: String): void {
+    const newSelectedColors = [...this.service.colorFilter];
+    if (newSelectedColors.includes(key)) {
+      newSelectedColors.splice(newSelectedColors.indexOf(key), 1);
+    } else {
+      newSelectedColors.push(key);
+    }
+    this.service.setColorFilter(newSelectedColors);
   }
 
   public sizes = [
@@ -79,7 +77,6 @@ export class CartComponent {
     { id: 5, key: 'xxl', value: 'XXL'},
   ];
 
-  // selectedSizes: number[] = JSON.parse(localStorage.getItem('selected') || '[]');
   onSelectionSizeChange(event: MatSelectionListChange): void {
     const selectedSizes = event.source.selectedOptions.selected.map((option: MatListOption) => option.value);
     this.service.setSizeFilter(selectedSizes);

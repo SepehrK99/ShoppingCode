@@ -1,5 +1,5 @@
 <div id="sidebar">
-  <h3 id="cart">CART</h3>
+  <h3 id="cart">Einkaufswagen</h3>
     <div id="cart">
       <div class="cart-place">
         <div class="cart-icon-top"></div>
@@ -11,14 +11,14 @@
             <img *ngIf="cartItem.images?.length" [src]="cartItem.images[0]" alt=""/>
             <span class="count">{{ cartItem.count }}</span>
             <span class="price">${{ cartItem.price }}</span>
-            <button class="delete" (click)="clearCartItem(cartItem)">Remove</button>
+            <button class="delete" (click)="clearCartItem(cartItem)">Löschen</button>
           </li>
         </ul>
       </div>
-      <button *ngIf="service.getItemCount() > 0" id="checkout" routerLink="/checkout" routerLinkActive="active" ariaCurrentWhenActive="page">CHECKOUT</button>
-      <span class="empty" *ngIf="service.getItemCount() === 0">No items in cart.</span>
+      <button *ngIf="service.getItemCount() > 0" id="checkout" routerLink="/checkout" routerLinkActive="active" ariaCurrentWhenActive="page">Zahlen</button>
+      <span class="empty" *ngIf="service.getItemCount() === 0">Einkaufswagen ist leer!</span>
     </div>
-  <h3>CATEGORIES</h3>
+  <h3>Kategorien</h3>
   <div class="checklist categories">
     <ul>
       <mat-selection-list #productsList (selectionChange)="onSelectionChange($event)">
@@ -28,7 +28,7 @@
       </mat-selection-list>
     </ul>
   </div>
-  <h3>COLORS</h3>
+  <h3>Fareben</h3>
   <div class="checklist colors">
     <ul>
       <li *ngFor="let color of colors">
@@ -38,7 +38,7 @@
       </li>
     </ul>
   </div>
-  <h3>SIZES</h3>
+  <h3>GRÖßE</h3>
   <div class="checklist sizes">
     <ul>
       <mat-selection-list #sizeList (selectionChange)="onSelectionSizeChange($event)">
@@ -48,7 +48,7 @@
       </mat-selection-list>
     </ul>
   </div>
-  <h3>PRICE RANGE</h3>
+  <h3>PREIS</h3>
   <mat-slider
     thumbLabel
     [displayWith]="formatLabel"

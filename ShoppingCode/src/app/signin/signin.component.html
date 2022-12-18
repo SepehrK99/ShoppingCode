@@ -8,30 +8,28 @@
       [formGroup]="resetPasswordForm"
     >
       <div class="container">
-        <h1>Sign Up</h1>
-        <p>Please fill in this form to create an account.</p>
+        <h1>Regestrieren</h1>
+        <p>Bitte erstellen Sie ein neues Konto</p>
         <hr>
         <label for="email"><b>Email</b></label>
-        <input id="email" type="text" placeholder="Enter Email" name="email" formControlName="email" required ngModel>
-        <label for="password"><b>New password:</b></label>
-        <input id="newPassword" type="password" placeholder="Enter Password"
+        <input id="email" type="text" placeholder="Email eingeben" name="email" formControlName="email" required ngModel>
+        <label for="password"><b>Passwort</b></label>
+        <input id="newPassword" type="password" placeholder="Passwort eingeben"
         formControlName="newPassword" name="password" required ngModel/>
         <div
           *ngIf="newPassword.invalid && (newPassword.dirty || newPassword.touched)"
           class="form-text text-danger"
         >
           <div *ngIf="newPassword.errors?.['required']">
-            Field is required
+            Das Feld ist leer!
           </div>
           <div *ngIf="newPassword.errors?.['pattern']">
-            Password must contain at least one number, one uppercase and a
-            lowercase letter and at least 8 characters<br />Password cannot
-            contain whitespace
+            Das Passwort soll von mind 2 Nummer, größ Buchstaben, klein Buchstaben, SonderZeichen(!, @, ?, %, &) beinhaltet werden<br />
           </div>
         </div>
-        <label for="confirmPassword"><b>New password (confirmation):</b></label>
+        <label for="confirmPassword"><b>Passwort wiederholen</b></label>
         <input id="confirmPassword" type="password" class="form-control"
-        formControlName="confirmPassword" placeholder="Repeat Password" [ngClass]="confirmPasswordClass"/>
+        formControlName="confirmPassword" placeholder="Passwort wiederholen" [ngClass]="confirmPasswordClass"/>
         <div
           *ngIf="
             confirmPassword.invalid &&
@@ -39,19 +37,19 @@
           class="form-text text-danger"
         >
           <div *ngIf="confirmPassword.errors?.['required']">
-            Field is required
+            Das Feld ist leer!
           </div>
           <div *ngIf="confirmPassword.errors?.['pattern']">
-            Passwords did not match
+            Passwörter stimmen nicht überein!
           </div>
           <div *ngIf="confirmPassword.errors?.['confirmedValidator']">
-            Passwords did not match
+            Passwörter stimmen nicht überein!
           </div>
         </div>
       </div>
       <div class="clearfix">
-        <button type="button" (click)="close.emit()" class="cancelbtn">Cancel</button>
-        <button [disabled]="confirmPassword.invalid" id="signup-button" type="submit" class="signup" >Sign Up</button>
+        <button type="button" (click)="close.emit()" class="cancelbtn">Abbrechen</button>
+        <button [disabled]="confirmPassword.invalid" id="signup-button" type="submit" class="signup" >Regestrieren</button>
       </div>
     </form>
   </div>

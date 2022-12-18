@@ -7,19 +7,19 @@
         <span>${{ product.price }}</span> ${{ product.price }}
       </div>
 
-      <h3>COLORS</h3>
+      <h3>FARBE</h3>
       <div class="colors-large">
         <ul>
           <li *ngFor="let color of product.colors"><a href="" [style]="'background-color:' + color.value"><span></span></a></li>
         </ul>
       </div>
 
-      <h3>SIZE</h3>
+      <h3>GRÖße</h3>
       <div class="sizes-large">
         <span *ngFor="let size of product.sizes">{{ size }}</span>
       </div>
 
-      <button class="add-cart-large" (click)="addToCart(product)">Add To Cart</button>
+      <button class="add-cart-large" (click)="addToCart(product)">Einkaufswagen</button>
 
     </div>
     <div class="make3D">

@@ -35,30 +35,6 @@ async function main() {
 
   app.get("/api/product", async function (req, res) {
     try {
-      // Filter examples:
-      // size available in m: { sizes: 'm' }
-      // size available in m and l: { sizes: { $in: ['m', 'l'] } }
-      // price range 10 to 40: { $and: [{ price: { $gte: 10 }}, { price: { $lte: 40 }}] }
-      // color name equals blue: { 'colors.name': 'blue' }
-      /*
-        combine multiple filters: 
-        {
-          sizes: { $in: ['m', 'l'] },
-          'colors.name': 'green',
-          $and: [
-            { price: { $gte: 10 }},
-            { price: { $lte: 40 }},
-          ],
-          $or: [
-            { name: new RegExp(search, 'i') },
-            { description: new RegExp(search, 'i') },
-          ],
-        }
-        
-        if (req.query.search) {
-          query["$or"] = ...
-        }
-        */
        const query = {};
        if (req.query.categories) {
         query.categories = { $in: req.query.categories.split(',') };

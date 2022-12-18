@@ -2,15 +2,15 @@
   <fieldset>
     <label>
       Name
-      <input type="text" name="Name" [(ngModel)]="message.name" placeholder="Enter Name">
+      <input type="text" name="Name" [(ngModel)]="message.name" placeholder="Name eingeben">
     </label>
     <label>
       E-Mail-Adresse
-      <input type="email" name="Email" [(ngModel)]="message.email" pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" placeholder="Enter Email">
+      <input type="email" name="Email" [(ngModel)]="message.email" pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" placeholder="Email eingeben">
     </label>
     <label>
       Ihre Nachricht
-      <textarea rows="3" name="Message" [(ngModel)]="message.message" placeholder="Enter Message"></textarea>
+      <textarea rows="3" name="Message" [(ngModel)]="message.message" placeholder="Nachricht schreiben"></textarea>
     </label>
     <div>
       <label>
@@ -19,5 +19,5 @@
       </label>
     </div>
   </fieldset>
-    <button type="button" (click)="postMessage()" class="btns">Submit</button>
+    <button type="button" (click)="postMessage()" class="btns">Einreichen</button>
 </form>
